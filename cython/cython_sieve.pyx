@@ -2,6 +2,7 @@ from libc.math cimport sqrt
 
 
 cdef bytearray byte = bytearray(b"\x01")
+cdef bytearray zero = bytearray(b"\x00")
 
 
 cdef class CSieve:

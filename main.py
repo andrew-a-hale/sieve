@@ -1,4 +1,3 @@
-import python.cython_sieve as cs
 import os
 import python.fast_sieve as fs
 import python.np_sieve as ns
@@ -10,6 +9,8 @@ if len(sys.argv) < 2:
 size = int(sys.argv[1])
 
 # CythonSieve
+os.system("cd cython && python3 setup.py build_ext --inplace && mv *.so ../python/")
+import python.cython_sieve as cs
 start = time.perf_counter()
 sieve = cs.CSieve(size)
 sieve.run_sieve()

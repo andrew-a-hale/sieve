@@ -1479,7 +1479,7 @@ static const char *__pyx_f[] = {
 /*--- Type declarations ---*/
 struct __pyx_obj_12cython_sieve_CSieve;
 
-/* "cython_sieve.pyx":7
+/* "cython_sieve.pyx":8
  * 
  * 
  * cdef class CSieve:             # <<<<<<<<<<<<<<
@@ -2079,6 +2079,7 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 /* Module declarations from "cython_sieve" */
 static PyObject *__pyx_v_12cython_sieve_byte = 0;
+static PyObject *__pyx_v_12cython_sieve_zero = 0;
 /* #### Code section: typeinfo ### */
 /* #### Code section: before_global_var ### */
 #define __Pyx_MODULE_NAME "cython_sieve"
@@ -2093,8 +2094,9 @@ static PyObject *__pyx_builtin_TypeError;
 static const char __pyx_k_[] = "\001";
 static const char __pyx_k_i[] = "i";
 static const char __pyx_k_q[] = "q";
+static const char __pyx_k__3[] = "\000";
 static const char __pyx_k_gc[] = "gc";
-static const char __pyx_k__10[] = "?";
+static const char __pyx_k__12[] = "?";
 static const char __pyx_k_bits[] = "bits";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "__name__";
@@ -2178,7 +2180,8 @@ typedef struct {
   PyObject *__pyx_n_s_CSieve_count;
   PyObject *__pyx_n_s_CSieve_run_sieve;
   PyObject *__pyx_n_s_TypeError;
-  PyObject *__pyx_n_s__10;
+  PyObject *__pyx_n_s__12;
+  PyObject *__pyx_kp_b__3;
   PyObject *__pyx_n_s_asyncio_coroutines;
   PyObject *__pyx_n_s_bits;
   PyObject *__pyx_n_s_bitslen;
@@ -2213,13 +2216,14 @@ typedef struct {
   PyObject *__pyx_kp_s_stringsource;
   PyObject *__pyx_n_s_test;
   PyObject *__pyx_tuple__2;
-  PyObject *__pyx_tuple__3;
+  PyObject *__pyx_tuple__4;
   PyObject *__pyx_tuple__5;
-  PyObject *__pyx_tuple__8;
-  PyObject *__pyx_codeobj__4;
+  PyObject *__pyx_tuple__7;
+  PyObject *__pyx_tuple__10;
   PyObject *__pyx_codeobj__6;
-  PyObject *__pyx_codeobj__7;
+  PyObject *__pyx_codeobj__8;
   PyObject *__pyx_codeobj__9;
+  PyObject *__pyx_codeobj__11;
 } __pyx_mstate;
 
 #if CYTHON_USE_MODULE_STATE
@@ -2271,7 +2275,8 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_CSieve_count);
   Py_CLEAR(clear_module_state->__pyx_n_s_CSieve_run_sieve);
   Py_CLEAR(clear_module_state->__pyx_n_s_TypeError);
-  Py_CLEAR(clear_module_state->__pyx_n_s__10);
+  Py_CLEAR(clear_module_state->__pyx_n_s__12);
+  Py_CLEAR(clear_module_state->__pyx_kp_b__3);
   Py_CLEAR(clear_module_state->__pyx_n_s_asyncio_coroutines);
   Py_CLEAR(clear_module_state->__pyx_n_s_bits);
   Py_CLEAR(clear_module_state->__pyx_n_s_bitslen);
@@ -2306,13 +2311,14 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_kp_s_stringsource);
   Py_CLEAR(clear_module_state->__pyx_n_s_test);
   Py_CLEAR(clear_module_state->__pyx_tuple__2);
-  Py_CLEAR(clear_module_state->__pyx_tuple__3);
+  Py_CLEAR(clear_module_state->__pyx_tuple__4);
   Py_CLEAR(clear_module_state->__pyx_tuple__5);
-  Py_CLEAR(clear_module_state->__pyx_tuple__8);
-  Py_CLEAR(clear_module_state->__pyx_codeobj__4);
+  Py_CLEAR(clear_module_state->__pyx_tuple__7);
+  Py_CLEAR(clear_module_state->__pyx_tuple__10);
   Py_CLEAR(clear_module_state->__pyx_codeobj__6);
-  Py_CLEAR(clear_module_state->__pyx_codeobj__7);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__8);
   Py_CLEAR(clear_module_state->__pyx_codeobj__9);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__11);
   return 0;
 }
 #endif
@@ -2342,7 +2348,8 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_CSieve_count);
   Py_VISIT(traverse_module_state->__pyx_n_s_CSieve_run_sieve);
   Py_VISIT(traverse_module_state->__pyx_n_s_TypeError);
-  Py_VISIT(traverse_module_state->__pyx_n_s__10);
+  Py_VISIT(traverse_module_state->__pyx_n_s__12);
+  Py_VISIT(traverse_module_state->__pyx_kp_b__3);
   Py_VISIT(traverse_module_state->__pyx_n_s_asyncio_coroutines);
   Py_VISIT(traverse_module_state->__pyx_n_s_bits);
   Py_VISIT(traverse_module_state->__pyx_n_s_bitslen);
@@ -2377,13 +2384,14 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_kp_s_stringsource);
   Py_VISIT(traverse_module_state->__pyx_n_s_test);
   Py_VISIT(traverse_module_state->__pyx_tuple__2);
-  Py_VISIT(traverse_module_state->__pyx_tuple__3);
+  Py_VISIT(traverse_module_state->__pyx_tuple__4);
   Py_VISIT(traverse_module_state->__pyx_tuple__5);
-  Py_VISIT(traverse_module_state->__pyx_tuple__8);
-  Py_VISIT(traverse_module_state->__pyx_codeobj__4);
+  Py_VISIT(traverse_module_state->__pyx_tuple__7);
+  Py_VISIT(traverse_module_state->__pyx_tuple__10);
   Py_VISIT(traverse_module_state->__pyx_codeobj__6);
-  Py_VISIT(traverse_module_state->__pyx_codeobj__7);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__8);
   Py_VISIT(traverse_module_state->__pyx_codeobj__9);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__11);
   return 0;
 }
 #endif
@@ -2425,7 +2433,8 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_CSieve_count __pyx_mstate_global->__pyx_n_s_CSieve_count
 #define __pyx_n_s_CSieve_run_sieve __pyx_mstate_global->__pyx_n_s_CSieve_run_sieve
 #define __pyx_n_s_TypeError __pyx_mstate_global->__pyx_n_s_TypeError
-#define __pyx_n_s__10 __pyx_mstate_global->__pyx_n_s__10
+#define __pyx_n_s__12 __pyx_mstate_global->__pyx_n_s__12
+#define __pyx_kp_b__3 __pyx_mstate_global->__pyx_kp_b__3
 #define __pyx_n_s_asyncio_coroutines __pyx_mstate_global->__pyx_n_s_asyncio_coroutines
 #define __pyx_n_s_bits __pyx_mstate_global->__pyx_n_s_bits
 #define __pyx_n_s_bitslen __pyx_mstate_global->__pyx_n_s_bitslen
@@ -2460,16 +2469,17 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_kp_s_stringsource __pyx_mstate_global->__pyx_kp_s_stringsource
 #define __pyx_n_s_test __pyx_mstate_global->__pyx_n_s_test
 #define __pyx_tuple__2 __pyx_mstate_global->__pyx_tuple__2
-#define __pyx_tuple__3 __pyx_mstate_global->__pyx_tuple__3
+#define __pyx_tuple__4 __pyx_mstate_global->__pyx_tuple__4
 #define __pyx_tuple__5 __pyx_mstate_global->__pyx_tuple__5
-#define __pyx_tuple__8 __pyx_mstate_global->__pyx_tuple__8
-#define __pyx_codeobj__4 __pyx_mstate_global->__pyx_codeobj__4
+#define __pyx_tuple__7 __pyx_mstate_global->__pyx_tuple__7
+#define __pyx_tuple__10 __pyx_mstate_global->__pyx_tuple__10
 #define __pyx_codeobj__6 __pyx_mstate_global->__pyx_codeobj__6
-#define __pyx_codeobj__7 __pyx_mstate_global->__pyx_codeobj__7
+#define __pyx_codeobj__8 __pyx_mstate_global->__pyx_codeobj__8
 #define __pyx_codeobj__9 __pyx_mstate_global->__pyx_codeobj__9
+#define __pyx_codeobj__11 __pyx_mstate_global->__pyx_codeobj__11
 /* #### Code section: module_code ### */
 
-/* "cython_sieve.pyx":11
+/* "cython_sieve.pyx":12
  *     cdef bytearray _bits
  * 
  *     def __cinit__(self, limit):             # <<<<<<<<<<<<<<
@@ -2513,12 +2523,12 @@ static int __pyx_pw_12cython_sieve_6CSieve_1__cinit__(PyObject *__pyx_v_self, Py
           (void)__Pyx_Arg_NewRef_VARARGS(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 11, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 12, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__cinit__") < 0)) __PYX_ERR(0, 11, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__cinit__") < 0)) __PYX_ERR(0, 12, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -2529,7 +2539,7 @@ static int __pyx_pw_12cython_sieve_6CSieve_1__cinit__(PyObject *__pyx_v_self, Py
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 11, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 12, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -2566,24 +2576,24 @@ static int __pyx_pf_12cython_sieve_6CSieve___cinit__(struct __pyx_obj_12cython_s
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 1);
 
-  /* "cython_sieve.pyx":12
+  /* "cython_sieve.pyx":13
  * 
  *     def __cinit__(self, limit):
  *         self._size = limit             # <<<<<<<<<<<<<<
  *         self._bits = byte * ((self._size + 1) // 2)
  * 
  */
-  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_limit); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 12, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_limit); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 13, __pyx_L1_error)
   __pyx_v_self->_size = __pyx_t_1;
 
-  /* "cython_sieve.pyx":13
+  /* "cython_sieve.pyx":14
  *     def __cinit__(self, limit):
  *         self._size = limit
  *         self._bits = byte * ((self._size + 1) // 2)             # <<<<<<<<<<<<<<
  * 
  *     def run_sieve(self):
  */
-  __pyx_t_2 = __Pyx_PySequence_Multiply(__pyx_v_12cython_sieve_byte, __Pyx_div_long((__pyx_v_self->_size + 1), 2)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PySequence_Multiply(__pyx_v_12cython_sieve_byte, __Pyx_div_long((__pyx_v_self->_size + 1), 2)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_2);
   __Pyx_GOTREF(__pyx_v_self->_bits);
@@ -2591,7 +2601,7 @@ static int __pyx_pf_12cython_sieve_6CSieve___cinit__(struct __pyx_obj_12cython_s
   __pyx_v_self->_bits = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "cython_sieve.pyx":11
+  /* "cython_sieve.pyx":12
  *     cdef bytearray _bits
  * 
  *     def __cinit__(self, limit):             # <<<<<<<<<<<<<<
@@ -2611,7 +2621,7 @@ static int __pyx_pf_12cython_sieve_6CSieve___cinit__(struct __pyx_obj_12cython_s
   return __pyx_r;
 }
 
-/* "cython_sieve.pyx":15
+/* "cython_sieve.pyx":16
  *         self._bits = byte * ((self._size + 1) // 2)
  * 
  *     def run_sieve(self):             # <<<<<<<<<<<<<<
@@ -2681,7 +2691,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run_sieve(struct __pyx_obj_12c
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("run_sieve", 1);
 
-  /* "cython_sieve.pyx":20
+  /* "cython_sieve.pyx":21
  *         cdef float q
  * 
  *         factor = 1             # <<<<<<<<<<<<<<
@@ -2690,7 +2700,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run_sieve(struct __pyx_obj_12c
  */
   __pyx_v_factor = 1;
 
-  /* "cython_sieve.pyx":21
+  /* "cython_sieve.pyx":22
  * 
  *         factor = 1
  *         q = sqrt(self._size) / 2             # <<<<<<<<<<<<<<
@@ -2699,27 +2709,27 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run_sieve(struct __pyx_obj_12c
  */
   __pyx_v_q = (sqrt(__pyx_v_self->_size) / 2.0);
 
-  /* "cython_sieve.pyx":22
+  /* "cython_sieve.pyx":23
  *         factor = 1
  *         q = sqrt(self._size) / 2
  *         bits = <char*>(self._bits)             # <<<<<<<<<<<<<<
  *         bitslen = len(bits)
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_AsWritableString(__pyx_v_self->_bits); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_AsWritableString(__pyx_v_self->_bits); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L1_error)
   __pyx_v_bits = ((char *)__pyx_t_1);
 
-  /* "cython_sieve.pyx":23
+  /* "cython_sieve.pyx":24
  *         q = sqrt(self._size) / 2
  *         bits = <char*>(self._bits)
  *         bitslen = len(bits)             # <<<<<<<<<<<<<<
  * 
  *         while factor < q:
  */
-  __pyx_t_2 = __Pyx_ssize_strlen(__pyx_v_bits); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_ssize_strlen(__pyx_v_bits); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 24, __pyx_L1_error)
   __pyx_v_bitslen = __pyx_t_2;
 
-  /* "cython_sieve.pyx":25
+  /* "cython_sieve.pyx":26
  *         bitslen = len(bits)
  * 
  *         while factor < q:             # <<<<<<<<<<<<<<
@@ -2730,7 +2740,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run_sieve(struct __pyx_obj_12c
     __pyx_t_3 = (__pyx_v_factor < __pyx_v_q);
     if (!__pyx_t_3) break;
 
-    /* "cython_sieve.pyx":26
+    /* "cython_sieve.pyx":27
  * 
  *         while factor < q:
  *             for i in range(factor, bitslen):             # <<<<<<<<<<<<<<
@@ -2742,7 +2752,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run_sieve(struct __pyx_obj_12c
     for (__pyx_t_6 = __pyx_v_factor; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_i = __pyx_t_6;
 
-      /* "cython_sieve.pyx":27
+      /* "cython_sieve.pyx":28
  *         while factor < q:
  *             for i in range(factor, bitslen):
  *                 if bits[i]:             # <<<<<<<<<<<<<<
@@ -2752,7 +2762,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run_sieve(struct __pyx_obj_12c
       __pyx_t_3 = ((__pyx_v_bits[__pyx_v_i]) != 0);
       if (__pyx_t_3) {
 
-        /* "cython_sieve.pyx":28
+        /* "cython_sieve.pyx":29
  *             for i in range(factor, bitslen):
  *                 if bits[i]:
  *                     factor = i             # <<<<<<<<<<<<<<
@@ -2761,7 +2771,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run_sieve(struct __pyx_obj_12c
  */
         __pyx_v_factor = __pyx_v_i;
 
-        /* "cython_sieve.pyx":29
+        /* "cython_sieve.pyx":30
  *                 if bits[i]:
  *                     factor = i
  *                     break             # <<<<<<<<<<<<<<
@@ -2770,7 +2780,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run_sieve(struct __pyx_obj_12c
  */
         goto __pyx_L6_break;
 
-        /* "cython_sieve.pyx":27
+        /* "cython_sieve.pyx":28
  *         while factor < q:
  *             for i in range(factor, bitslen):
  *                 if bits[i]:             # <<<<<<<<<<<<<<
@@ -2781,7 +2791,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run_sieve(struct __pyx_obj_12c
     }
     __pyx_L6_break:;
 
-    /* "cython_sieve.pyx":31
+    /* "cython_sieve.pyx":32
  *                     break
  * 
  *             start = 2 * factor * (factor + 1)             # <<<<<<<<<<<<<<
@@ -2790,7 +2800,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run_sieve(struct __pyx_obj_12c
  */
     __pyx_v_start = ((2 * __pyx_v_factor) * (__pyx_v_factor + 1));
 
-    /* "cython_sieve.pyx":32
+    /* "cython_sieve.pyx":33
  * 
  *             start = 2 * factor * (factor + 1)
  *             step = 2 * factor + 1             # <<<<<<<<<<<<<<
@@ -2799,7 +2809,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run_sieve(struct __pyx_obj_12c
  */
     __pyx_v_step = ((2 * __pyx_v_factor) + 1);
 
-    /* "cython_sieve.pyx":33
+    /* "cython_sieve.pyx":34
  *             start = 2 * factor * (factor + 1)
  *             step = 2 * factor + 1
  *             while start < bitslen:             # <<<<<<<<<<<<<<
@@ -2810,7 +2820,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run_sieve(struct __pyx_obj_12c
       __pyx_t_3 = (__pyx_v_start < __pyx_v_bitslen);
       if (!__pyx_t_3) break;
 
-      /* "cython_sieve.pyx":34
+      /* "cython_sieve.pyx":35
  *             step = 2 * factor + 1
  *             while start < bitslen:
  *                 bits[start] = 0             # <<<<<<<<<<<<<<
@@ -2819,7 +2829,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run_sieve(struct __pyx_obj_12c
  */
       (__pyx_v_bits[__pyx_v_start]) = 0;
 
-      /* "cython_sieve.pyx":35
+      /* "cython_sieve.pyx":36
  *             while start < bitslen:
  *                 bits[start] = 0
  *                 start += step             # <<<<<<<<<<<<<<
@@ -2829,7 +2839,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run_sieve(struct __pyx_obj_12c
       __pyx_v_start = (__pyx_v_start + __pyx_v_step);
     }
 
-    /* "cython_sieve.pyx":37
+    /* "cython_sieve.pyx":38
  *                 start += step
  * 
  *             factor += 1             # <<<<<<<<<<<<<<
@@ -2839,7 +2849,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run_sieve(struct __pyx_obj_12c
     __pyx_v_factor = (__pyx_v_factor + 1);
   }
 
-  /* "cython_sieve.pyx":15
+  /* "cython_sieve.pyx":16
  *         self._bits = byte * ((self._size + 1) // 2)
  * 
  *     def run_sieve(self):             # <<<<<<<<<<<<<<
@@ -2859,7 +2869,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run_sieve(struct __pyx_obj_12c
   return __pyx_r;
 }
 
-/* "cython_sieve.pyx":39
+/* "cython_sieve.pyx":40
  *             factor += 1
  * 
  *     def count(self):             # <<<<<<<<<<<<<<
@@ -2919,13 +2929,13 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_4count(struct __pyx_obj_12cytho
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("count", 1);
 
-  /* "cython_sieve.pyx":40
+  /* "cython_sieve.pyx":41
  * 
  *     def count(self):
  *         return self._bits.count(b"\x01")             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->_bits, __pyx_n_s_count); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->_bits, __pyx_n_s_count); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 41, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -2945,7 +2955,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_4count(struct __pyx_obj_12cytho
     PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_kp_b_};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 1+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 41, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
@@ -2953,7 +2963,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_4count(struct __pyx_obj_12cytho
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "cython_sieve.pyx":39
+  /* "cython_sieve.pyx":40
  *             factor += 1
  * 
  *     def count(self):             # <<<<<<<<<<<<<<
@@ -3358,7 +3368,8 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_CSieve_count, __pyx_k_CSieve_count, sizeof(__pyx_k_CSieve_count), 0, 0, 1, 1},
     {&__pyx_n_s_CSieve_run_sieve, __pyx_k_CSieve_run_sieve, sizeof(__pyx_k_CSieve_run_sieve), 0, 0, 1, 1},
     {&__pyx_n_s_TypeError, __pyx_k_TypeError, sizeof(__pyx_k_TypeError), 0, 0, 1, 1},
-    {&__pyx_n_s__10, __pyx_k__10, sizeof(__pyx_k__10), 0, 0, 1, 1},
+    {&__pyx_n_s__12, __pyx_k__12, sizeof(__pyx_k__12), 0, 0, 1, 1},
+    {&__pyx_kp_b__3, __pyx_k__3, sizeof(__pyx_k__3), 0, 0, 0, 0},
     {&__pyx_n_s_asyncio_coroutines, __pyx_k_asyncio_coroutines, sizeof(__pyx_k_asyncio_coroutines), 0, 0, 1, 1},
     {&__pyx_n_s_bits, __pyx_k_bits, sizeof(__pyx_k_bits), 0, 0, 1, 1},
     {&__pyx_n_s_bitslen, __pyx_k_bitslen, sizeof(__pyx_k_bitslen), 0, 0, 1, 1},
@@ -3398,7 +3409,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
 }
 /* #### Code section: cached_builtins ### */
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 27, __pyx_L1_error)
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(1, 2, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -3414,42 +3425,53 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * 
  * cdef bytearray byte = bytearray(b"\x01")             # <<<<<<<<<<<<<<
- * 
+ * cdef bytearray zero = bytearray(b"\x00")
  * 
  */
   __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_b_); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "cython_sieve.pyx":15
+  /* "cython_sieve.pyx":5
+ * 
+ * cdef bytearray byte = bytearray(b"\x01")
+ * cdef bytearray zero = bytearray(b"\x00")             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_b__3); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__4);
+  __Pyx_GIVEREF(__pyx_tuple__4);
+
+  /* "cython_sieve.pyx":16
  *         self._bits = byte * ((self._size + 1) // 2)
  * 
  *     def run_sieve(self):             # <<<<<<<<<<<<<<
  *         cdef char* bits
  *         cdef int factor, start, step, i, bitslen
  */
-  __pyx_tuple__3 = PyTuple_Pack(8, __pyx_n_s_self, __pyx_n_s_bits, __pyx_n_s_factor, __pyx_n_s_start, __pyx_n_s_step, __pyx_n_s_i, __pyx_n_s_bitslen, __pyx_n_s_q); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 15, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__3);
-  __Pyx_GIVEREF(__pyx_tuple__3);
-  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cython_sieve_pyx, __pyx_n_s_run_sieve, 15, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __pyx_tuple__5 = PyTuple_Pack(8, __pyx_n_s_self, __pyx_n_s_bits, __pyx_n_s_factor, __pyx_n_s_start, __pyx_n_s_step, __pyx_n_s_i, __pyx_n_s_bitslen, __pyx_n_s_q); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__5);
+  __Pyx_GIVEREF(__pyx_tuple__5);
+  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cython_sieve_pyx, __pyx_n_s_run_sieve, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 16, __pyx_L1_error)
 
-  /* "cython_sieve.pyx":39
+  /* "cython_sieve.pyx":40
  *             factor += 1
  * 
  *     def count(self):             # <<<<<<<<<<<<<<
  *         return self._bits.count(b"\x01")
  */
-  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 39, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__5);
-  __Pyx_GIVEREF(__pyx_tuple__5);
-  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cython_sieve_pyx, __pyx_n_s_count, 39, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 39, __pyx_L1_error)
+  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__7);
+  __Pyx_GIVEREF(__pyx_tuple__7);
+  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cython_sieve_pyx, __pyx_n_s_count, 40, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) __PYX_ERR(0, 40, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_codeobj__7 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(1, 1, __pyx_L1_error)
 
   /* "(tree fragment)":3
  * def __reduce_cython__(self):
@@ -3457,10 +3479,10 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
  */
-  __pyx_tuple__8 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_pyx_state); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(1, 3, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__8);
-  __Pyx_GIVEREF(__pyx_tuple__8);
-  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(1, 3, __pyx_L1_error)
+  __pyx_tuple__10 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_pyx_state); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(1, 3, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__10);
+  __Pyx_GIVEREF(__pyx_tuple__10);
+  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(1, 3, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -3495,6 +3517,7 @@ static int __Pyx_modinit_global_init_code(void) {
   __Pyx_RefNannySetupContext("__Pyx_modinit_global_init_code", 0);
   /*--- Global init code ---*/
   __pyx_v_12cython_sieve_byte = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  __pyx_v_12cython_sieve_zero = ((PyObject*)Py_None); Py_INCREF(Py_None);
   __Pyx_RefNannyFinishContext();
   return 0;
 }
@@ -3523,15 +3546,15 @@ static int __Pyx_modinit_type_init_code(void) {
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_ptype_12cython_sieve_CSieve = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_12cython_sieve_CSieve_spec, NULL); if (unlikely(!__pyx_ptype_12cython_sieve_CSieve)) __PYX_ERR(0, 7, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_12cython_sieve_CSieve_spec, __pyx_ptype_12cython_sieve_CSieve) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  __pyx_ptype_12cython_sieve_CSieve = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_12cython_sieve_CSieve_spec, NULL); if (unlikely(!__pyx_ptype_12cython_sieve_CSieve)) __PYX_ERR(0, 8, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_12cython_sieve_CSieve_spec, __pyx_ptype_12cython_sieve_CSieve) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   #else
   __pyx_ptype_12cython_sieve_CSieve = &__pyx_type_12cython_sieve_CSieve;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_12cython_sieve_CSieve) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_12cython_sieve_CSieve) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
   __pyx_ptype_12cython_sieve_CSieve->tp_print = 0;
@@ -3541,9 +3564,9 @@ static int __Pyx_modinit_type_init_code(void) {
     __pyx_ptype_12cython_sieve_CSieve->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_CSieve, (PyObject *) __pyx_ptype_12cython_sieve_CSieve) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_CSieve, (PyObject *) __pyx_ptype_12cython_sieve_CSieve) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_12cython_sieve_CSieve) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_12cython_sieve_CSieve) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   #endif
   __Pyx_RefNannyFinishContext();
   return 0;
@@ -3858,7 +3881,7 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  * cdef bytearray byte = bytearray(b"\x01")             # <<<<<<<<<<<<<<
- * 
+ * cdef bytearray zero = bytearray(b"\x00")
  * 
  */
   __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyByteArray_Type)), __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 4, __pyx_L1_error)
@@ -3868,28 +3891,42 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "cython_sieve.pyx":15
+  /* "cython_sieve.pyx":5
+ * 
+ * cdef bytearray byte = bytearray(b"\x01")
+ * cdef bytearray zero = bytearray(b"\x00")             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyByteArray_Type)), __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_XGOTREF(__pyx_v_12cython_sieve_zero);
+  __Pyx_DECREF_SET(__pyx_v_12cython_sieve_zero, ((PyObject*)__pyx_t_2));
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
+
+  /* "cython_sieve.pyx":16
  *         self._bits = byte * ((self._size + 1) // 2)
  * 
  *     def run_sieve(self):             # <<<<<<<<<<<<<<
  *         cdef char* bits
  *         cdef int factor, start, step, i, bitslen
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_12cython_sieve_6CSieve_3run_sieve, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CSieve_run_sieve, NULL, __pyx_n_s_cython_sieve, __pyx_d, ((PyObject *)__pyx_codeobj__4)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_12cython_sieve_6CSieve_3run_sieve, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CSieve_run_sieve, NULL, __pyx_n_s_cython_sieve, __pyx_d, ((PyObject *)__pyx_codeobj__6)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_12cython_sieve_CSieve, __pyx_n_s_run_sieve, __pyx_t_2) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_12cython_sieve_CSieve, __pyx_n_s_run_sieve, __pyx_t_2) < 0) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   PyType_Modified(__pyx_ptype_12cython_sieve_CSieve);
 
-  /* "cython_sieve.pyx":39
+  /* "cython_sieve.pyx":40
  *             factor += 1
  * 
  *     def count(self):             # <<<<<<<<<<<<<<
  *         return self._bits.count(b"\x01")
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_12cython_sieve_6CSieve_5count, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CSieve_count, NULL, __pyx_n_s_cython_sieve, __pyx_d, ((PyObject *)__pyx_codeobj__6)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 39, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_12cython_sieve_6CSieve_5count, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CSieve_count, NULL, __pyx_n_s_cython_sieve, __pyx_d, ((PyObject *)__pyx_codeobj__8)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_12cython_sieve_CSieve, __pyx_n_s_count, __pyx_t_2) < 0) __PYX_ERR(0, 39, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_12cython_sieve_CSieve, __pyx_n_s_count, __pyx_t_2) < 0) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   PyType_Modified(__pyx_ptype_12cython_sieve_CSieve);
 
@@ -3898,7 +3935,7 @@ if (!__Pyx_RefNanny) {
  *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_12cython_sieve_6CSieve_7__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CSieve___reduce_cython, NULL, __pyx_n_s_cython_sieve, __pyx_d, ((PyObject *)__pyx_codeobj__7)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_12cython_sieve_6CSieve_7__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CSieve___reduce_cython, NULL, __pyx_n_s_cython_sieve, __pyx_d, ((PyObject *)__pyx_codeobj__9)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_reduce_cython, __pyx_t_2) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -3909,7 +3946,7 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_12cython_sieve_6CSieve_9__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CSieve___setstate_cython, NULL, __pyx_n_s_cython_sieve, __pyx_d, ((PyObject *)__pyx_codeobj__9)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 3, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_12cython_sieve_6CSieve_9__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CSieve___setstate_cython, NULL, __pyx_n_s_cython_sieve, __pyx_d, ((PyObject *)__pyx_codeobj__11)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_setstate_cython, __pyx_t_2) < 0) __PYX_ERR(1, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -7508,7 +7545,7 @@ __Pyx_PyType_GetName(PyTypeObject* tp)
     if (unlikely(name == NULL) || unlikely(!PyUnicode_Check(name))) {
         PyErr_Clear();
         Py_XDECREF(name);
-        name = __Pyx_NewRef(__pyx_n_s__10);
+        name = __Pyx_NewRef(__pyx_n_s__12);
     }
     return name;
 }

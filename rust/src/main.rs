@@ -1,6 +1,7 @@
 use std::{env, time::SystemTime};
 
 pub struct Sieve {
+    limit: usize,
     bitslength: usize,
     bits: Vec<bool>,
     debug: bool,
@@ -9,6 +10,7 @@ pub struct Sieve {
 impl Sieve {
     fn new(limit: usize, debug: bool) -> Sieve {
         Sieve {
+            limit: limit,
             bitslength: (limit + 1) / 2,
             bits: vec![true; (limit + 1) / 2],
             debug: debug,
@@ -16,7 +18,7 @@ impl Sieve {
     }
 
     fn run(&mut self) {
-        let q: usize = (self.bitslength as f32).sqrt() as usize;
+        let q: usize = (self.limit as f32).sqrt() as usize;
         let mut factor: usize = 1;
         let mut start: usize;
         let mut step: usize;

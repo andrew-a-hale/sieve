@@ -61,3 +61,6 @@ Julia is a JIT compiled language and benefits significantly from a warm-up run w
 
 ## Julia Issue
 At 100,000,000 Julia is significantly faster comparatively. Unsure why this is the case.
+
+# Run
+Use `python main.py 1000000` to run the sieves. This script will also compile the cython, rust, and go programs on each run.
