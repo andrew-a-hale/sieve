@@ -10,6 +10,8 @@ Prime Sieve in multiple languages
 - Rust
 
 # Results
+The programs are not optimally written and this should not be taken as a benchmark for the languages.
+
 Calculating primes upto 1,000,000 with duration in seconds.
 ```
 Cython        -- Duration: 0.0010325490147806704
@@ -55,4 +57,7 @@ Rust          -- Duration: 5.265943
 ```
 
 ## Julia Iterations
-Julia is a JIT compiled language and benefits significantly from a warm-up run.
+Julia is a JIT compiled language and benefits significantly from a warm-up run when calculating smaller amounts of primes and has less benefit for more primes.
+
+## Julia Issue
+At 100,000,000 Julia is significantly faster comparatively. Unsure why this is the case.
