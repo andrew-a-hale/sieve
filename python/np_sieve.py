@@ -1,29 +1,22 @@
-import numpy as np
 import math
-import time
+import numpy as np
 
 
 class Sieve:
     def __init__(self, limit):
-        self.limit = limit
-        bits = np.ones((limit + 1) // 2, dtype=np.bool_)
-        self.bits = bits
+        self.size = limit
+        self.bitslength = (limit + 1) // 2
+        self.bits = np.ones(self.bitslength, dtype=np.bool_)
 
-    def run_sieve(self):
-        for n in range(1, round(math.sqrt(self.limit / 2)) + 1):
-            factor = 2 * n + 1
-            start = 2 * n * (n+1)
-            self.bits[start :: factor] = False
+    def run(self):
+        q = math.sqrt(self.size)
+        factor = 1
+
+        while factor <= q:
+            step = 2 * factor + 1
+            start = 2 * factor * (factor + 1)
+            self.bits[start::step] = False
+            factor += 1
 
     def check_primes(self):
         return self.bits.sum()
-
-
-if __name__ == "__main__":
-    start = time.perf_counter()
-    sieve = Sieve(1000000)
-    sieve.run_sieve()
-
-    duration = time.perf_counter() - start
-    count = sieve.check_primes()
-    print(f"Duration: {duration} -- Count: {count}")

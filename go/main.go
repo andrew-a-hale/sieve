@@ -9,28 +9,28 @@ import (
 )
 
 type Sieve struct {
+	bitslength int
 	bits []bool
-	limit int
+	size int
 }
 
 func SieveFactory(limit int) Sieve {
-	size := (limit + 1) / 2
-	bits := make([]bool, size)
-	for i := 0; i < size; i++ {
+	bitslength := (limit + 1) / 2
+	bits := make([]bool, bitslength)
+	for i := 0; i < bitslength; i++ {
 		bits[i] = true
 	}
 
-	return Sieve{bits: bits, limit: limit}
+	return Sieve{bits: bits, size: limit, bitslength: bitslength}
 }
 
 func (s Sieve) run() {
-	q := int(math.Sqrt(float64(s.limit) + 1) / 2)
-	var bitslen = len(s.bits)
+	q := int(math.Sqrt(float64(s.size) + 1) / 2)
 	var start, step int
 
 	for factor := 1; factor <= q; factor++ {
 		// find next bits
-		for i := factor; i < bitslen; i++ {
+		for i := factor; i < s.bitslength; i++ {
 			if s.bits[i] {
 				factor = i
 				break
@@ -40,13 +40,13 @@ func (s Sieve) run() {
 		// mark numbers
 		start = 2 * factor * (factor + 1)
 		step = 2 * factor + 1
-		for ; start < bitslen; start+=step {
+		for ; start < s.bitslength; start+=step {
 			s.bits[start] = false
 		}
 	}
 }
 
-func (s Sieve) count() int {
+func (s Sieve) check_primes() int {
 	count := 0	
 	for _, b := range s.bits {
 		if b {
@@ -61,5 +61,5 @@ func main() {
 	start := time.Now()
 	sieve := SieveFactory(int(limit))
 	sieve.run()
-	fmt.Printf("Go -- Duration: %f -- Count: %d\n", time.Since(start).Seconds(), sieve.count())
+	fmt.Printf("Go -- Duration: %f -- Count: %d\n", time.Since(start).Seconds(), sieve.check_primes())
 }

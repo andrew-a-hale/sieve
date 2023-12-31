@@ -4,16 +4,14 @@ pub struct Sieve {
     limit: usize,
     bitslength: usize,
     bits: Vec<bool>,
-    debug: bool,
 }
 
 impl Sieve {
-    fn new(limit: usize, debug: bool) -> Sieve {
+    fn new(limit: usize) -> Sieve {
         Sieve {
             limit: limit,
             bitslength: (limit + 1) / 2,
             bits: vec![true; (limit + 1) / 2],
-            debug: debug,
         }
     }
 
@@ -45,12 +43,9 @@ impl Sieve {
 
     fn count_primes(self) -> usize {
         let mut sum: usize = 0;
-        for (i, b) in self.bits.iter().enumerate() {
+        for b in self.bits.iter() {
             if *b {
                 sum += 1;
-                if self.debug {
-                    print!("{},", 2 * i + 1);
-                }
             }
         }
 
@@ -59,11 +54,10 @@ impl Sieve {
 }
 
 fn main() {
-    let debug: bool = false;
     let args: Vec<String> = env::args().collect();
     let limit: usize = args[1].parse::<usize>().unwrap();
     let time = SystemTime::now();
-    let mut sieve = Sieve::new(limit, debug);
+    let mut sieve = Sieve::new(limit);
     sieve.run();
     println!("Rust -- Duration: {:?} -- Count: {}", time.elapsed().unwrap().as_secs_f64(), sieve.count_primes())
 }
