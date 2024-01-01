@@ -57,3 +57,6 @@ os.system(f"rustc -C opt-level=3 -o rust/main rust/src/main.rs && ./rust/main {s
 # RSieve
 os.system(f"Rscript R/sieve.R {size}")
 os.system(f"Rscript R/rcpp_sieve.R {size}")
+
+# OCamlSieve
+os.system(f"cd ocaml && dune build && dune exec ocaml {size}")

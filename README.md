@@ -10,9 +10,12 @@ Prime Sieve in multiple languages
 - Rust
 - R
 - Rcpp
+- OCaml (WIP)
 
 # Results
-The programs are not optimally written and this should not be taken as a benchmark for the languages.
+The programs are single-threaded and not optimally written. This should not be taken as a benchmark for the languages.
+
+Below results were done on a 2.6ghz macbook with 16mb RAM.
 
 Calculating primes upto 1,000,000 with duration in seconds.
 ```
@@ -77,4 +80,4 @@ Julia is a JIT compiled language and benefits significantly from a warm-up run w
 Julia at 100,000,000 primes is significantly faster comparatively. Unsure why this is the case.
 
 # Run
-Use `python main.py <n>` to run the sieves. This script will also compile the cython, rust, go, and rcpp programs on each run.
+Use `python main.py <n>` to run the sieves. This script will also compile the cython, rust, go, ocaml, and rcpp programs on each run.
