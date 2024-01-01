@@ -8,59 +8,73 @@ Prime Sieve in multiple languages
 - Julia
 - Go
 - Rust
+- R
+- Rcpp
 
 # Results
 The programs are not optimally written and this should not be taken as a benchmark for the languages.
 
 Calculating primes upto 1,000,000 with duration in seconds.
 ```
-Cython        -- Duration: 0.0010325490147806704
-Python Fast   -- Duration: 0.0014414070174098015
-Python Numpy  -- Duration: 0.0020004019897896796
-Go            -- Duration: 0.001431
-Julia Iter: 0 -- Duration: 0.012896060943603516
-Julia Iter: 1 -- Duration: 0.0009369850158691406
-Rust          -- Duration: 0.000963
+Cython        -- Duration: 0.0010541419906076044 -- Count: 78498
+Python Fast   -- Duration: 0.001440813997760415 -- Count: 78498
+Python Normal -- Duration: 0.008162404003087431 -- Count: 78498
+Python Numpy  -- Duration: 0.002488642989192158 -- Count: 78498
+Go            -- Duration: 0.001160 -- Count: 78498
+Julia Iter: 0 -- Duration: 0.012526988983154297 -- Count: 78498
+Julia Iter: 1 -- Duration: 0.0007979869842529297 -- Count: 78498
+Rust          -- Duration: 0.00079 -- Count: 78498
+R             -- Duration: 0.0358779430389404 -- Count: 78498
+Rcpp          -- Duration: 0.00275206565856934 -- Count: 78498
 ```
 
 Calculating primes upto 10,000,000 with duration in seconds.
 ```
-Cython        -- Duration: 0.011565071006771177
-Python Fast   -- Duration: 0.01653865701518953
-Python Numpy  -- Duration: 0.033117940998636186
-Go            -- Duration: 0.012858
-Julia Iter: 0 -- Duration: 0.020022153854370117
-Julia Iter: 1 -- Duration: 0.008819818496704102
-Rust          -- Duration: 0.010357
+Cython        -- Duration: 0.012311583006521687 -- Count: 664579
+Python Fast   -- Duration: 0.014657235995400697 -- Count: 664579
+Python Normal -- Duration: 0.1944303260243032 -- Count: 664579
+Python Numpy  -- Duration: 0.04000113799702376 -- Count: 664579
+Go            -- Duration: 0.015117 -- Count: 664579
+Julia Iter: 0 -- Duration: 0.021266937255859375 -- Count: 664579
+Julia Iter: 1 -- Duration: 0.008841991424560547 -- Count: 664579
+Rust          -- Duration: 0.009271 -- Count: 664579
+R             -- Duration: 0.240325927734375 -- Count: 664579
+Rcpp          -- Duration: 0.0274279117584229 -- Count: 664579
 ```
 
 Calculating primes upto 100,000,000 with duration in seconds.
 ```
-Cython        -- Duration: 0.3524915549787693
-Python Fast   -- Duration: 0.4262897960143164
-Python Numpy  -- Duration: 0.9671202870085835
-Go            -- Duration: 0.387338
-Julia Iter: 0 -- Duration: 0.11850905418395996
-Julia Iter: 1 -- Duration: 0.11523699760437012
-Rust          -- Duration: 0.337009
+Cython        -- Duration: 0.30929452800774015 -- Count: 5761455
+Python Fast   -- Duration: 0.3861277360119857 -- Count: 5761455
+Python Normal -- Duration: 2.442796892981278 -- Count: 5761455
+Python Numpy  -- Duration: 0.9450715290149674 -- Count: 5761455
+Go            -- Duration: 0.334042 -- Count: 5761455
+Julia Iter: 0 -- Duration: 0.11601495742797852 -- Count: 5761455
+Julia Iter: 1 -- Duration: 0.1167299747467041 -- Count: 5761455
+Rust          -- Duration: 0.293408 -- Count: 5761455
+R             -- Duration: 1.9012930393219 -- Count: 5761455
+Rcpp          -- Duration: 0.274863958358765 -- Count: 5761455
 ```
 
 Calculating primes upto 1,000,000,000 with duration in seconds.
 ```
-Cython        -- Duration: 4.6992673040076625
-Python Fast   -- Duration: 5.259457616019063
-Python Numpy  -- Duration: 14.83121354400646
-Go            -- Duration: 4.517262
-Julia Iter: 0 -- Duration: 4.192141056060791
-Julia Iter: 1 -- Duration: 4.230482816696167
-Rust          -- Duration: 5.265943
+Cython        -- Duration: 4.560784330999013 -- Count: 50847534
+Python Fast   -- Duration: 4.730918754998129 -- Count: 50847534
+Python Normal -- Duration: 37.52011579897953 -- Count: 50847534
+Python Numpy  -- Duration: 15.579333100002259 -- Count: 50847534
+Go            -- Duration: 4.171424 -- Count: 50847534
+Julia Iter: 0 -- Duration: 3.87786602973938 -- Count: 50847534
+Julia Iter: 1 -- Duration: 3.729544162750244 -- Count: 50847534
+Rust          -- Duration: 3.9630520000000002 -- Count: 50847534
+R             -- Duration: 21.1558890342712 -- Count: 50847534
+Rcpp          -- Duration: 4.4062659740448 -- Count: 50847534
 ```
 
 ## Julia Iterations
 Julia is a JIT compiled language and benefits significantly from a warm-up run when calculating smaller amounts of primes and has less benefit for more primes.
 
 ## Julia Issue
-At 100,000,000 Julia is significantly faster comparatively. Unsure why this is the case.
+Julia at 100,000,000 primes is significantly faster comparatively. Unsure why this is the case.
 
 # Run
-Use `python main.py 1000000` to run the sieves. This script will also compile the cython, rust, and go programs on each run.
+Use `python main.py <n>` to run the sieves. This script will also compile the cython, rust, go, and rcpp programs on each run.

@@ -1,24 +1,23 @@
 module main
 
 struct Sieve
-    size::Int
     bits::BitVector
     bitslength::Int
 
     function Sieve(limit) 
         length = div(limit+1, 2)
-        new(limit, BitVector(trues(length)), length)
+        new(BitVector(trues(length)), length)
     end
 end
 
 function run(s::Sieve)
     factor = 2
-    q = sqrt(s.size)
+    q = sqrt(div(s.bitslength, 2)) + 1
 
-    while factor <= q
+    while factor < q
         factor = findnext(s.bits, factor)
-        step = 2 * (factor-1) + 1
         start = 2 * (factor-1) * factor + 1
+        step = 2 * (factor-1) + 1
         s.bits[start:step:s.bitslength] .= false
         factor += 1
     end

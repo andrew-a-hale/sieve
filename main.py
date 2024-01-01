@@ -1,5 +1,6 @@
 import os
 import python.fast_sieve as fs
+import python.sieve as s
 import python.np_sieve as ns
 import time
 import sys
@@ -17,7 +18,7 @@ sieve = cs.CSieve(size)
 sieve.run()
 duration = time.perf_counter() - start
 count = sieve.check_primes()
-print(f"Cython -- Duration: {duration} -- Count: {count}")
+print(f"Cython        -- Duration: {duration} -- Count: {count}")
 
 # FastSieve
 start = time.perf_counter()
@@ -25,7 +26,16 @@ sieve = fs.FastSieve(size)
 sieve.run()
 duration = time.perf_counter() - start
 count = sieve.check_primes()
-print(f"Python Fast -- Duration: {duration} -- Count: {count}")
+print(f"Python Fast   -- Duration: {duration} -- Count: {count}")
+
+
+# Sieve
+start = time.perf_counter()
+sieve = s.Sieve(size)
+sieve.run()
+duration = time.perf_counter() - start
+count = sieve.check_primes()
+print(f"Python Normal -- Duration: {duration} -- Count: {count}")
 
 # NumpySieve
 start = time.perf_counter()
@@ -33,7 +43,7 @@ sieve = ns.Sieve(size)
 sieve.run()
 duration = time.perf_counter() - start
 count = sieve.check_primes()
-print(f"Python Numpy -- Duration: {duration} -- Count: {count}")
+print(f"Python Numpy  -- Duration: {duration} -- Count: {count}")
 
 # GoSieve
 os.system(f"go run go/main.go {size}")
@@ -43,3 +53,7 @@ os.system(f"julia julia/main.jl {size}")
 
 # RustSieve
 os.system(f"rustc -C opt-level=3 -o rust/main rust/src/main.rs && ./rust/main {size}")
+
+# RSieve
+os.system(f"Rscript R/sieve.R {size}")
+os.system(f"Rscript R/rcpp_sieve.R {size}")

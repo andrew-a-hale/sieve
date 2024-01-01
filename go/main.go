@@ -11,7 +11,6 @@ import (
 type Sieve struct {
 	bitslength int
 	bits []bool
-	size int
 }
 
 func SieveFactory(limit int) Sieve {
@@ -21,14 +20,14 @@ func SieveFactory(limit int) Sieve {
 		bits[i] = true
 	}
 
-	return Sieve{bits: bits, size: limit, bitslength: bitslength}
+	return Sieve{bits: bits, bitslength: bitslength}
 }
 
 func (s Sieve) run() {
-	q := int(math.Sqrt(float64(s.size) + 1) / 2)
+	q := int(math.Sqrt(float64(s.bitslength / 2))) + 1
 	var start, step int
 
-	for factor := 1; factor <= q; factor++ {
+	for factor := 1; factor < q; factor++ {
 		// find next bits
 		for i := factor; i < s.bitslength; i++ {
 			if s.bits[i] {
@@ -61,5 +60,5 @@ func main() {
 	start := time.Now()
 	sieve := SieveFactory(int(limit))
 	sieve.run()
-	fmt.Printf("Go -- Duration: %f -- Count: %d\n", time.Since(start).Seconds(), sieve.check_primes())
+	fmt.Printf("Go            -- Duration: %f -- Count: %d\n", time.Since(start).Seconds(), sieve.check_primes())
 }

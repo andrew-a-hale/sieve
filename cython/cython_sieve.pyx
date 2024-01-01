@@ -2,13 +2,11 @@ from libc.math cimport sqrt
 
 
 cdef class CSieve:
-    cdef int _size
     cdef int _bitslength
     cdef bytearray _bits
 
     def __cinit__(self, limit):
-        self._size = limit
-        self._bitslength = (self._size + 1) // 2
+        self._bitslength = (limit + 1) // 2
         self._bits = bytearray(b"\x01") * self._bitslength
 
     def run(self):
@@ -17,7 +15,7 @@ cdef class CSieve:
 
         bits = <char*>(self._bits)
         factor = 1
-        q = sqrt(self._size) / 2
+        q = sqrt(self._bitslength // 2) + 1
 
         while factor < q:
             for i in range(factor, self._bitslength):

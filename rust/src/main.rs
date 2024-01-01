@@ -1,7 +1,6 @@
 use std::{env, time::SystemTime};
 
 pub struct Sieve {
-    limit: usize,
     bitslength: usize,
     bits: Vec<bool>,
 }
@@ -9,19 +8,18 @@ pub struct Sieve {
 impl Sieve {
     fn new(limit: usize) -> Sieve {
         Sieve {
-            limit: limit,
             bitslength: (limit + 1) / 2,
             bits: vec![true; (limit + 1) / 2],
         }
     }
 
     fn run(&mut self) {
-        let q: usize = (self.limit as f32).sqrt() as usize;
+        let q: usize = (((self.bitslength / 2) as f32).sqrt()) as usize + 1;
         let mut factor: usize = 1;
         let mut start: usize;
         let mut step: usize;
 
-        while factor <= q {
+        while factor < q {
             // find next bit
             for i in factor..self.bitslength {
                 if self.bits[i] {
@@ -59,5 +57,5 @@ fn main() {
     let time = SystemTime::now();
     let mut sieve = Sieve::new(limit);
     sieve.run();
-    println!("Rust -- Duration: {:?} -- Count: {}", time.elapsed().unwrap().as_secs_f64(), sieve.count_primes())
+    println!("Rust          -- Duration: {:?} -- Count: {}", time.elapsed().unwrap().as_secs_f64(), sieve.count_primes())
 }

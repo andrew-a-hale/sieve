@@ -1483,12 +1483,11 @@ struct __pyx_obj_12cython_sieve_CSieve;
  * 
  * 
  * cdef class CSieve:             # <<<<<<<<<<<<<<
- *     cdef int _size
  *     cdef int _bitslength
+ *     cdef bytearray _bits
  */
 struct __pyx_obj_12cython_sieve_CSieve {
   PyObject_HEAD
-  int _size;
   int _bitslength;
   PyObject *_bits;
 };
@@ -1715,8 +1714,21 @@ static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject *const *kwvalues
 static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
     Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
 
-/* DivInt[long].proto */
-static CYTHON_INLINE long __Pyx_div_long(long, long);
+/* PyIntBinop.proto */
+#if !CYTHON_COMPILING_IN_PYPY
+static PyObject* __Pyx_PyInt_FloorDivideObjC(PyObject *op1, PyObject *op2, long intval, int inplace, int zerodivision_check);
+#else
+#define __Pyx_PyInt_FloorDivideObjC(op1, op2, intval, inplace, zerodivision_check)\
+    (inplace ? PyNumber_InPlaceFloorDivide(op1, op2) : PyNumber_FloorDivide(op1, op2))
+#endif
+
+/* PyIntBinop.proto */
+#if !CYTHON_COMPILING_IN_PYPY
+static PyObject* __Pyx_PyInt_AddObjC(PyObject *op1, PyObject *op2, long intval, int inplace, int zerodivision_check);
+#else
+#define __Pyx_PyInt_AddObjC(op1, op2, intval, inplace, zerodivision_check)\
+    (inplace ? PyNumber_InPlaceAdd(op1, op2) : PyNumber_Add(op1, op2))
+#endif
 
 /* PyObjectCall.proto */
 #if CYTHON_COMPILING_IN_CPYTHON
@@ -1731,6 +1743,9 @@ static CYTHON_INLINE PyObject* __Pyx_PySequence_Multiply(PyObject *seq, Py_ssize
 
 /* KeywordStringCheck.proto */
 static int __Pyx_CheckKeywordStrings(PyObject *kw, const char* function_name, int kw_allowed);
+
+/* DivInt[long].proto */
+static CYTHON_INLINE long __Pyx_div_long(long, long);
 
 /* PyFunctionFastCall.proto */
 #if CYTHON_FAST_PYCALL
@@ -2212,6 +2227,8 @@ typedef struct {
   PyObject *__pyx_n_s_step;
   PyObject *__pyx_kp_s_stringsource;
   PyObject *__pyx_n_s_test;
+  PyObject *__pyx_int_1;
+  PyObject *__pyx_int_2;
   PyObject *__pyx_tuple__2;
   PyObject *__pyx_tuple__3;
   PyObject *__pyx_tuple__5;
@@ -2305,6 +2322,8 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_step);
   Py_CLEAR(clear_module_state->__pyx_kp_s_stringsource);
   Py_CLEAR(clear_module_state->__pyx_n_s_test);
+  Py_CLEAR(clear_module_state->__pyx_int_1);
+  Py_CLEAR(clear_module_state->__pyx_int_2);
   Py_CLEAR(clear_module_state->__pyx_tuple__2);
   Py_CLEAR(clear_module_state->__pyx_tuple__3);
   Py_CLEAR(clear_module_state->__pyx_tuple__5);
@@ -2376,6 +2395,8 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_step);
   Py_VISIT(traverse_module_state->__pyx_kp_s_stringsource);
   Py_VISIT(traverse_module_state->__pyx_n_s_test);
+  Py_VISIT(traverse_module_state->__pyx_int_1);
+  Py_VISIT(traverse_module_state->__pyx_int_2);
   Py_VISIT(traverse_module_state->__pyx_tuple__2);
   Py_VISIT(traverse_module_state->__pyx_tuple__3);
   Py_VISIT(traverse_module_state->__pyx_tuple__5);
@@ -2459,6 +2480,8 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_step __pyx_mstate_global->__pyx_n_s_step
 #define __pyx_kp_s_stringsource __pyx_mstate_global->__pyx_kp_s_stringsource
 #define __pyx_n_s_test __pyx_mstate_global->__pyx_n_s_test
+#define __pyx_int_1 __pyx_mstate_global->__pyx_int_1
+#define __pyx_int_2 __pyx_mstate_global->__pyx_int_2
 #define __pyx_tuple__2 __pyx_mstate_global->__pyx_tuple__2
 #define __pyx_tuple__3 __pyx_mstate_global->__pyx_tuple__3
 #define __pyx_tuple__5 __pyx_mstate_global->__pyx_tuple__5
@@ -2469,12 +2492,12 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_codeobj__9 __pyx_mstate_global->__pyx_codeobj__9
 /* #### Code section: module_code ### */
 
-/* "cython_sieve.pyx":9
+/* "cython_sieve.pyx":8
  *     cdef bytearray _bits
  * 
  *     def __cinit__(self, limit):             # <<<<<<<<<<<<<<
- *         self._size = limit
- *         self._bitslength = (self._size + 1) // 2
+ *         self._bitslength = (limit + 1) // 2
+ *         self._bits = bytearray(b"\x01") * self._bitslength
  */
 
 /* Python wrapper */
@@ -2513,12 +2536,12 @@ static int __pyx_pw_12cython_sieve_6CSieve_1__cinit__(PyObject *__pyx_v_self, Py
           (void)__Pyx_Arg_NewRef_VARARGS(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 8, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__cinit__") < 0)) __PYX_ERR(0, 9, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__cinit__") < 0)) __PYX_ERR(0, 8, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -2529,7 +2552,7 @@ static int __pyx_pw_12cython_sieve_6CSieve_1__cinit__(PyObject *__pyx_v_self, Py
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 9, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 8, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -2559,65 +2582,62 @@ static int __pyx_pw_12cython_sieve_6CSieve_1__cinit__(PyObject *__pyx_v_self, Py
 static int __pyx_pf_12cython_sieve_6CSieve___cinit__(struct __pyx_obj_12cython_sieve_CSieve *__pyx_v_self, PyObject *__pyx_v_limit) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
-  int __pyx_t_1;
+  PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
+  int __pyx_t_3;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 1);
 
+  /* "cython_sieve.pyx":9
+ * 
+ *     def __cinit__(self, limit):
+ *         self._bitslength = (limit + 1) // 2             # <<<<<<<<<<<<<<
+ *         self._bits = bytearray(b"\x01") * self._bitslength
+ * 
+ */
+  __pyx_t_1 = __Pyx_PyInt_AddObjC(__pyx_v_limit, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyInt_FloorDivideObjC(__pyx_t_1, __pyx_int_2, 2, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_v_self->_bitslength = __pyx_t_3;
+
   /* "cython_sieve.pyx":10
- * 
  *     def __cinit__(self, limit):
- *         self._size = limit             # <<<<<<<<<<<<<<
- *         self._bitslength = (self._size + 1) // 2
- *         self._bits = bytearray(b"\x01") * self._bitslength
- */
-  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_limit); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L1_error)
-  __pyx_v_self->_size = __pyx_t_1;
-
-  /* "cython_sieve.pyx":11
- *     def __cinit__(self, limit):
- *         self._size = limit
- *         self._bitslength = (self._size + 1) // 2             # <<<<<<<<<<<<<<
- *         self._bits = bytearray(b"\x01") * self._bitslength
- * 
- */
-  __pyx_v_self->_bitslength = __Pyx_div_long((__pyx_v_self->_size + 1), 2);
-
-  /* "cython_sieve.pyx":12
- *         self._size = limit
- *         self._bitslength = (self._size + 1) // 2
+ *         self._bitslength = (limit + 1) // 2
  *         self._bits = bytearray(b"\x01") * self._bitslength             # <<<<<<<<<<<<<<
  * 
  *     def run(self):
  */
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyByteArray_Type)), __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 12, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyByteArray_Type)), __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PySequence_Multiply(__pyx_t_2, __pyx_v_self->_bitslength); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 12, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = __Pyx_PySequence_Multiply(__pyx_t_2, __pyx_v_self->_bitslength); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 10, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_GIVEREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_v_self->_bits);
   __Pyx_DECREF(__pyx_v_self->_bits);
-  __pyx_v_self->_bits = ((PyObject*)__pyx_t_3);
-  __pyx_t_3 = 0;
+  __pyx_v_self->_bits = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
 
-  /* "cython_sieve.pyx":9
+  /* "cython_sieve.pyx":8
  *     cdef bytearray _bits
  * 
  *     def __cinit__(self, limit):             # <<<<<<<<<<<<<<
- *         self._size = limit
- *         self._bitslength = (self._size + 1) // 2
+ *         self._bitslength = (limit + 1) // 2
+ *         self._bits = bytearray(b"\x01") * self._bitslength
  */
 
   /* function exit code */
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
   __Pyx_AddTraceback("cython_sieve.CSieve.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
@@ -2625,7 +2645,7 @@ static int __pyx_pf_12cython_sieve_6CSieve___cinit__(struct __pyx_obj_12cython_s
   return __pyx_r;
 }
 
-/* "cython_sieve.pyx":14
+/* "cython_sieve.pyx":12
  *         self._bits = bytearray(b"\x01") * self._bitslength
  * 
  *     def run(self):             # <<<<<<<<<<<<<<
@@ -2693,36 +2713,36 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run(struct __pyx_obj_12cython_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("run", 1);
 
-  /* "cython_sieve.pyx":18
+  /* "cython_sieve.pyx":16
  *         cdef float q
  * 
  *         bits = <char*>(self._bits)             # <<<<<<<<<<<<<<
  *         factor = 1
- *         q = sqrt(self._size) / 2
+ *         q = sqrt(self._bitslength // 2) + 1
  */
-  __pyx_t_1 = __Pyx_PyObject_AsWritableString(__pyx_v_self->_bits); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_AsWritableString(__pyx_v_self->_bits); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(0, 16, __pyx_L1_error)
   __pyx_v_bits = ((char *)__pyx_t_1);
 
-  /* "cython_sieve.pyx":19
+  /* "cython_sieve.pyx":17
  * 
  *         bits = <char*>(self._bits)
  *         factor = 1             # <<<<<<<<<<<<<<
- *         q = sqrt(self._size) / 2
+ *         q = sqrt(self._bitslength // 2) + 1
  * 
  */
   __pyx_v_factor = 1;
 
-  /* "cython_sieve.pyx":20
+  /* "cython_sieve.pyx":18
  *         bits = <char*>(self._bits)
  *         factor = 1
- *         q = sqrt(self._size) / 2             # <<<<<<<<<<<<<<
+ *         q = sqrt(self._bitslength // 2) + 1             # <<<<<<<<<<<<<<
  * 
  *         while factor < q:
  */
-  __pyx_v_q = (sqrt(__pyx_v_self->_size) / 2.0);
+  __pyx_v_q = (sqrt(__Pyx_div_long(__pyx_v_self->_bitslength, 2)) + 1.0);
 
-  /* "cython_sieve.pyx":22
- *         q = sqrt(self._size) / 2
+  /* "cython_sieve.pyx":20
+ *         q = sqrt(self._bitslength // 2) + 1
  * 
  *         while factor < q:             # <<<<<<<<<<<<<<
  *             for i in range(factor, self._bitslength):
@@ -2732,7 +2752,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run(struct __pyx_obj_12cython_
     __pyx_t_2 = (__pyx_v_factor < __pyx_v_q);
     if (!__pyx_t_2) break;
 
-    /* "cython_sieve.pyx":23
+    /* "cython_sieve.pyx":21
  * 
  *         while factor < q:
  *             for i in range(factor, self._bitslength):             # <<<<<<<<<<<<<<
@@ -2744,7 +2764,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run(struct __pyx_obj_12cython_
     for (__pyx_t_5 = __pyx_v_factor; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
       __pyx_v_i = __pyx_t_5;
 
-      /* "cython_sieve.pyx":24
+      /* "cython_sieve.pyx":22
  *         while factor < q:
  *             for i in range(factor, self._bitslength):
  *                 if bits[i]:             # <<<<<<<<<<<<<<
@@ -2754,7 +2774,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run(struct __pyx_obj_12cython_
       __pyx_t_2 = ((__pyx_v_bits[__pyx_v_i]) != 0);
       if (__pyx_t_2) {
 
-        /* "cython_sieve.pyx":25
+        /* "cython_sieve.pyx":23
  *             for i in range(factor, self._bitslength):
  *                 if bits[i]:
  *                     factor = i             # <<<<<<<<<<<<<<
@@ -2763,7 +2783,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run(struct __pyx_obj_12cython_
  */
         __pyx_v_factor = __pyx_v_i;
 
-        /* "cython_sieve.pyx":26
+        /* "cython_sieve.pyx":24
  *                 if bits[i]:
  *                     factor = i
  *                     break             # <<<<<<<<<<<<<<
@@ -2772,7 +2792,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run(struct __pyx_obj_12cython_
  */
         goto __pyx_L6_break;
 
-        /* "cython_sieve.pyx":24
+        /* "cython_sieve.pyx":22
  *         while factor < q:
  *             for i in range(factor, self._bitslength):
  *                 if bits[i]:             # <<<<<<<<<<<<<<
@@ -2783,7 +2803,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run(struct __pyx_obj_12cython_
     }
     __pyx_L6_break:;
 
-    /* "cython_sieve.pyx":28
+    /* "cython_sieve.pyx":26
  *                     break
  * 
  *             start = 2 * factor * (factor + 1)             # <<<<<<<<<<<<<<
@@ -2792,7 +2812,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run(struct __pyx_obj_12cython_
  */
     __pyx_v_start = ((2 * __pyx_v_factor) * (__pyx_v_factor + 1));
 
-    /* "cython_sieve.pyx":29
+    /* "cython_sieve.pyx":27
  * 
  *             start = 2 * factor * (factor + 1)
  *             step = 2 * factor + 1             # <<<<<<<<<<<<<<
@@ -2801,7 +2821,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run(struct __pyx_obj_12cython_
  */
     __pyx_v_step = ((2 * __pyx_v_factor) + 1);
 
-    /* "cython_sieve.pyx":30
+    /* "cython_sieve.pyx":28
  *             start = 2 * factor * (factor + 1)
  *             step = 2 * factor + 1
  *             while start < self._bitslength:             # <<<<<<<<<<<<<<
@@ -2812,7 +2832,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run(struct __pyx_obj_12cython_
       __pyx_t_2 = (__pyx_v_start < __pyx_v_self->_bitslength);
       if (!__pyx_t_2) break;
 
-      /* "cython_sieve.pyx":31
+      /* "cython_sieve.pyx":29
  *             step = 2 * factor + 1
  *             while start < self._bitslength:
  *                 bits[start] = 0             # <<<<<<<<<<<<<<
@@ -2821,7 +2841,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run(struct __pyx_obj_12cython_
  */
       (__pyx_v_bits[__pyx_v_start]) = 0;
 
-      /* "cython_sieve.pyx":32
+      /* "cython_sieve.pyx":30
  *             while start < self._bitslength:
  *                 bits[start] = 0
  *                 start += step             # <<<<<<<<<<<<<<
@@ -2831,7 +2851,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run(struct __pyx_obj_12cython_
       __pyx_v_start = (__pyx_v_start + __pyx_v_step);
     }
 
-    /* "cython_sieve.pyx":34
+    /* "cython_sieve.pyx":32
  *                 start += step
  * 
  *             factor += 1             # <<<<<<<<<<<<<<
@@ -2841,7 +2861,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run(struct __pyx_obj_12cython_
     __pyx_v_factor = (__pyx_v_factor + 1);
   }
 
-  /* "cython_sieve.pyx":14
+  /* "cython_sieve.pyx":12
  *         self._bits = bytearray(b"\x01") * self._bitslength
  * 
  *     def run(self):             # <<<<<<<<<<<<<<
@@ -2861,7 +2881,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_2run(struct __pyx_obj_12cython_
   return __pyx_r;
 }
 
-/* "cython_sieve.pyx":36
+/* "cython_sieve.pyx":34
  *             factor += 1
  * 
  *     def check_primes(self):             # <<<<<<<<<<<<<<
@@ -2921,13 +2941,13 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_4check_primes(struct __pyx_obj_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("check_primes", 1);
 
-  /* "cython_sieve.pyx":37
+  /* "cython_sieve.pyx":35
  * 
  *     def check_primes(self):
  *         return self._bits.count(b"\x01")             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->_bits, __pyx_n_s_count); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->_bits, __pyx_n_s_count); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -2947,7 +2967,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_4check_primes(struct __pyx_obj_
     PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_kp_b_};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 1+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 37, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
@@ -2955,7 +2975,7 @@ static PyObject *__pyx_pf_12cython_sieve_6CSieve_4check_primes(struct __pyx_obj_
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "cython_sieve.pyx":36
+  /* "cython_sieve.pyx":34
  *             factor += 1
  * 
  *     def check_primes(self):             # <<<<<<<<<<<<<<
@@ -3400,7 +3420,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
 }
 /* #### Code section: cached_builtins ### */
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 21, __pyx_L1_error)
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(1, 2, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -3412,39 +3432,39 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "cython_sieve.pyx":12
- *         self._size = limit
- *         self._bitslength = (self._size + 1) // 2
+  /* "cython_sieve.pyx":10
+ *     def __cinit__(self, limit):
+ *         self._bitslength = (limit + 1) // 2
  *         self._bits = bytearray(b"\x01") * self._bitslength             # <<<<<<<<<<<<<<
  * 
  *     def run(self):
  */
-  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_b_); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 12, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_b_); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "cython_sieve.pyx":14
+  /* "cython_sieve.pyx":12
  *         self._bits = bytearray(b"\x01") * self._bitslength
  * 
  *     def run(self):             # <<<<<<<<<<<<<<
  *         cdef int factor, start, step, i
  *         cdef float q
  */
-  __pyx_tuple__3 = PyTuple_Pack(7, __pyx_n_s_self, __pyx_n_s_factor, __pyx_n_s_start, __pyx_n_s_step, __pyx_n_s_i, __pyx_n_s_q, __pyx_n_s_bits); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 14, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(7, __pyx_n_s_self, __pyx_n_s_factor, __pyx_n_s_start, __pyx_n_s_step, __pyx_n_s_i, __pyx_n_s_q, __pyx_n_s_bits); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
-  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cython_sieve_pyx, __pyx_n_s_run, 14, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 14, __pyx_L1_error)
+  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cython_sieve_pyx, __pyx_n_s_run, 12, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 12, __pyx_L1_error)
 
-  /* "cython_sieve.pyx":36
+  /* "cython_sieve.pyx":34
  *             factor += 1
  * 
  *     def check_primes(self):             # <<<<<<<<<<<<<<
  *         return self._bits.count(b"\x01")
  */
-  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
-  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cython_sieve_pyx, __pyx_n_s_check_primes, 36, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cython_sieve_pyx, __pyx_n_s_check_primes, 34, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 34, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
@@ -3473,6 +3493,8 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
 
 static CYTHON_SMALL_CODE int __Pyx_InitConstants(void) {
   if (__Pyx_CreateStringTabAndInitStrings() < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_2 = PyInt_FromLong(2); if (unlikely(!__pyx_int_2)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -3855,28 +3877,28 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "cython_sieve.pyx":14
+  /* "cython_sieve.pyx":12
  *         self._bits = bytearray(b"\x01") * self._bitslength
  * 
  *     def run(self):             # <<<<<<<<<<<<<<
  *         cdef int factor, start, step, i
  *         cdef float q
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_12cython_sieve_6CSieve_3run, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CSieve_run, NULL, __pyx_n_s_cython_sieve, __pyx_d, ((PyObject *)__pyx_codeobj__4)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 14, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_12cython_sieve_6CSieve_3run, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CSieve_run, NULL, __pyx_n_s_cython_sieve, __pyx_d, ((PyObject *)__pyx_codeobj__4)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_12cython_sieve_CSieve, __pyx_n_s_run, __pyx_t_2) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_12cython_sieve_CSieve, __pyx_n_s_run, __pyx_t_2) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   PyType_Modified(__pyx_ptype_12cython_sieve_CSieve);
 
-  /* "cython_sieve.pyx":36
+  /* "cython_sieve.pyx":34
  *             factor += 1
  * 
  *     def check_primes(self):             # <<<<<<<<<<<<<<
  *         return self._bits.count(b"\x01")
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_12cython_sieve_6CSieve_5check_primes, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CSieve_check_primes, NULL, __pyx_n_s_cython_sieve, __pyx_d, ((PyObject *)__pyx_codeobj__6)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_12cython_sieve_6CSieve_5check_primes, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CSieve_check_primes, NULL, __pyx_n_s_cython_sieve, __pyx_d, ((PyObject *)__pyx_codeobj__6)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_12cython_sieve_CSieve, __pyx_n_s_check_primes, __pyx_t_2) < 0) __PYX_ERR(0, 36, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_12cython_sieve_CSieve, __pyx_n_s_check_primes, __pyx_t_2) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   PyType_Modified(__pyx_ptype_12cython_sieve_CSieve);
 
@@ -4559,13 +4581,275 @@ static void __Pyx_RaiseArgtupleInvalid(
                  (num_expected == 1) ? "" : "s", num_found);
 }
 
-/* DivInt[long] */
-static CYTHON_INLINE long __Pyx_div_long(long a, long b) {
-    long q = a / b;
-    long r = a - q*b;
-    q -= ((r != 0) & ((r ^ b) < 0));
-    return q;
+/* PyIntBinop */
+#if !CYTHON_COMPILING_IN_PYPY
+static PyObject* __Pyx_PyInt_FloorDivideObjC(PyObject *op1, PyObject *op2, long intval, int inplace, int zerodivision_check) {
+    CYTHON_MAYBE_UNUSED_VAR(intval);
+    CYTHON_MAYBE_UNUSED_VAR(inplace);
+    CYTHON_UNUSED_VAR(zerodivision_check);
+    #if PY_MAJOR_VERSION < 3
+    if (likely(PyInt_CheckExact(op1))) {
+        const long b = intval;
+        long x;
+        long a = PyInt_AS_LONG(op1);
+        
+            if (unlikely(b == -1 && ((unsigned long)a) == 0-(unsigned long)a))
+                return PyInt_Type.tp_as_number->nb_floor_divide(op1, op2);
+            else {
+                long q, r;
+                q = a / b;
+                r = a - q*b;
+                q -= ((r != 0) & ((r ^ b) < 0));
+                x = q;
+            }
+            return PyInt_FromLong(x);
+    }
+    #endif
+    #if CYTHON_USE_PYLONG_INTERNALS
+    if (likely(PyLong_CheckExact(op1))) {
+        const long b = intval;
+        long a, x;
+#ifdef HAVE_LONG_LONG
+        const PY_LONG_LONG llb = intval;
+        PY_LONG_LONG lla, llx;
+#endif
+        if (unlikely(__Pyx_PyLong_IsZero(op1))) {
+            return __Pyx_NewRef(op1);
+        }
+        if (likely(__Pyx_PyLong_IsCompact(op1))) {
+            a = __Pyx_PyLong_CompactValue(op1);
+        } else {
+            const digit* digits = __Pyx_PyLong_Digits(op1);
+            const Py_ssize_t size = __Pyx_PyLong_SignedDigitCount(op1);
+            switch (size) {
+                case -2:
+                    if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                        a = -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    #ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 2 * PyLong_SHIFT) {
+                        lla = -(PY_LONG_LONG) (((((unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+                    #endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                case 2:
+                    if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                        a = (long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    #ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 2 * PyLong_SHIFT) {
+                        lla = (PY_LONG_LONG) (((((unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+                    #endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                case -3:
+                    if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                        a = -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    #ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 3 * PyLong_SHIFT) {
+                        lla = -(PY_LONG_LONG) (((((((unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+                    #endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                case 3:
+                    if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                        a = (long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    #ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 3 * PyLong_SHIFT) {
+                        lla = (PY_LONG_LONG) (((((((unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+                    #endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                case -4:
+                    if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
+                        a = -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    #ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 4 * PyLong_SHIFT) {
+                        lla = -(PY_LONG_LONG) (((((((((unsigned PY_LONG_LONG)digits[3]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+                    #endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                case 4:
+                    if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
+                        a = (long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    #ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 4 * PyLong_SHIFT) {
+                        lla = (PY_LONG_LONG) (((((((((unsigned PY_LONG_LONG)digits[3]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+                    #endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                default: return PyLong_Type.tp_as_number->nb_floor_divide(op1, op2);
+            }
+        }
+                {
+                    long q, r;
+                    q = a / b;
+                    r = a - q*b;
+                    q -= ((r != 0) & ((r ^ b) < 0));
+                    x = q;
+                }
+            return PyLong_FromLong(x);
+#ifdef HAVE_LONG_LONG
+        long_long:
+                {
+                    PY_LONG_LONG q, r;
+                    q = lla / llb;
+                    r = lla - q*llb;
+                    q -= ((r != 0) & ((r ^ llb) < 0));
+                    llx = q;
+                }
+            return PyLong_FromLongLong(llx);
+#endif
+        
+        
+    }
+    #endif
+    return (inplace ? PyNumber_InPlaceFloorDivide : PyNumber_FloorDivide)(op1, op2);
 }
+#endif
+
+/* PyIntBinop */
+#if !CYTHON_COMPILING_IN_PYPY
+static PyObject* __Pyx_PyInt_AddObjC(PyObject *op1, PyObject *op2, long intval, int inplace, int zerodivision_check) {
+    CYTHON_MAYBE_UNUSED_VAR(intval);
+    CYTHON_MAYBE_UNUSED_VAR(inplace);
+    CYTHON_UNUSED_VAR(zerodivision_check);
+    #if PY_MAJOR_VERSION < 3
+    if (likely(PyInt_CheckExact(op1))) {
+        const long b = intval;
+        long x;
+        long a = PyInt_AS_LONG(op1);
+        
+            x = (long)((unsigned long)a + (unsigned long)b);
+            if (likely((x^a) >= 0 || (x^b) >= 0))
+                return PyInt_FromLong(x);
+            return PyLong_Type.tp_as_number->nb_add(op1, op2);
+    }
+    #endif
+    #if CYTHON_USE_PYLONG_INTERNALS
+    if (likely(PyLong_CheckExact(op1))) {
+        const long b = intval;
+        long a, x;
+#ifdef HAVE_LONG_LONG
+        const PY_LONG_LONG llb = intval;
+        PY_LONG_LONG lla, llx;
+#endif
+        if (unlikely(__Pyx_PyLong_IsZero(op1))) {
+            return __Pyx_NewRef(op2);
+        }
+        if (likely(__Pyx_PyLong_IsCompact(op1))) {
+            a = __Pyx_PyLong_CompactValue(op1);
+        } else {
+            const digit* digits = __Pyx_PyLong_Digits(op1);
+            const Py_ssize_t size = __Pyx_PyLong_SignedDigitCount(op1);
+            switch (size) {
+                case -2:
+                    if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                        a = -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    #ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 2 * PyLong_SHIFT) {
+                        lla = -(PY_LONG_LONG) (((((unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+                    #endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                case 2:
+                    if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                        a = (long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    #ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 2 * PyLong_SHIFT) {
+                        lla = (PY_LONG_LONG) (((((unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+                    #endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                case -3:
+                    if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                        a = -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    #ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 3 * PyLong_SHIFT) {
+                        lla = -(PY_LONG_LONG) (((((((unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+                    #endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                case 3:
+                    if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                        a = (long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    #ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 3 * PyLong_SHIFT) {
+                        lla = (PY_LONG_LONG) (((((((unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+                    #endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                case -4:
+                    if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
+                        a = -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    #ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 4 * PyLong_SHIFT) {
+                        lla = -(PY_LONG_LONG) (((((((((unsigned PY_LONG_LONG)digits[3]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+                    #endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                case 4:
+                    if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
+                        a = (long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    #ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 4 * PyLong_SHIFT) {
+                        lla = (PY_LONG_LONG) (((((((((unsigned PY_LONG_LONG)digits[3]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+                    #endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                default: return PyLong_Type.tp_as_number->nb_add(op1, op2);
+            }
+        }
+                x = a + b;
+            return PyLong_FromLong(x);
+#ifdef HAVE_LONG_LONG
+        long_long:
+                llx = lla + llb;
+            return PyLong_FromLongLong(llx);
+#endif
+        
+        
+    }
+    #endif
+    if (PyFloat_CheckExact(op1)) {
+        const long b = intval;
+#if CYTHON_COMPILING_IN_LIMITED_API
+        double a = __pyx_PyFloat_AsDouble(op1);
+#else
+        double a = PyFloat_AS_DOUBLE(op1);
+#endif
+            double result;
+            
+            PyFPE_START_PROTECT("add", return NULL)
+            result = ((double)a) + (double)b;
+            PyFPE_END_PROTECT(result)
+            return PyFloat_FromDouble(result);
+    }
+    return (inplace ? PyNumber_InPlaceAdd : PyNumber_Add)(op1, op2);
+}
+#endif
 
 /* PyObjectCall */
 #if CYTHON_COMPILING_IN_CPYTHON
@@ -4685,6 +4969,14 @@ invalid_keyword:
         function_name, key);
     #endif
     return 0;
+}
+
+/* DivInt[long] */
+static CYTHON_INLINE long __Pyx_div_long(long a, long b) {
+    long q = a / b;
+    long r = a - q*b;
+    q -= ((r != 0) & ((r ^ b) < 0));
+    return q;
 }
 
 /* PyFunctionFastCall */
