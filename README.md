@@ -89,3 +89,6 @@ A more functional OCaml sieve was too slow (x10,000 slower than the fast version
 
 # Run
 Use `python main.py <n>` to run the sieves. This script will also compile the cython, rust, go, ocaml, and rcpp programs on each run.
+
+## Dependencies
+The python script assumes that normal tooling and some packages have been installed for each of the languages.
