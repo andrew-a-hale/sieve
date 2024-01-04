@@ -85,7 +85,7 @@ Julia is a JIT compiled language and benefits significantly from a warm-up run w
 Julia at 100,000,000 primes is significantly faster comparatively. Unsure why this is the case.
 
 ## OCaml
-A more functional OCaml sieve was too slow (x10 slower than the fast version) and was omitted, but the code is still in `ocaml/bin/main.ml`.
+A more functional OCaml sieve was too slow (x10,000 slower than the fast version for primes up to 1,000,000 and worse for larger n) and was omitted, but the code is still in `ocaml/bin/main.ml`.
 
 # Run
 Use `python main.py <n>` to run the sieves. This script will also compile the cython, rust, go, ocaml, and rcpp programs on each run.
