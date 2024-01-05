@@ -11,6 +11,7 @@ Prime Sieve in multiple languages
 - R
 - Rcpp
 - OCaml
+- Javascript
 - Mojo (todo)
 
 # Results
@@ -31,6 +32,7 @@ Rust          -- Duration: 0.00079 -- Count: 78498
 R             -- Duration: 0.0358779430389404 -- Count: 78498
 Rcpp          -- Duration: 0.00275206565856934 -- Count: 78498
 OCaml Fast    -- Duration: 0.018104 -- Count: 78498
+Javascript    -- Duration: 0.04250298285484314 -- Count: 78498
 ```
 
 Calculating primes upto 10,000,000 with duration in seconds.
@@ -46,6 +48,7 @@ Rust          -- Duration: 0.009271 -- Count: 664579
 R             -- Duration: 0.240325927734375 -- Count: 664579
 Rcpp          -- Duration: 0.0274279117584229 -- Count: 664579
 OCaml Fast    -- Duration: 0.154751 -- Count: 664579
+Javascript    -- Duration: 0.3349671308994293 -- Count: 664579
 ```
 
 Calculating primes upto 100,000,000 with duration in seconds.
@@ -61,6 +64,7 @@ Rust          -- Duration: 0.293408 -- Count: 5761455
 R             -- Duration: 1.9012930393219 -- Count: 5761455
 Rcpp          -- Duration: 0.274863958358765 -- Count: 5761455
 OCaml Fast    -- Duration: 1.726690 -- Count: 5761455
+Javascript    -- Duration: 5.148028622865677 -- Count: 5761455
 ```
 
 Calculating primes upto 1,000,000,000 with duration in seconds.
@@ -76,6 +80,7 @@ Rust          -- Duration: 3.9630520000000002 -- Count: 50847534
 R             -- Duration: 21.1558890342712 -- Count: 50847534
 Rcpp          -- Duration: 4.4062659740448 -- Count: 50847534
 OCaml Fast    -- Duration: 16.437602 -- Count: 50847534
+Javascript    -- Ran out of memory.
 ```
 
 ## Julia Iterations

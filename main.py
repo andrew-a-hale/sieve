@@ -59,4 +59,7 @@ os.system(f"Rscript R/sieve.R {size}")
 os.system(f"Rscript R/rcpp_sieve.R {size}")
 
 # OCamlSieve 
-os.system(f"cd ocaml && dune build && dune exec ocaml {size}")
+os.system(f"cd ocaml && eval $(opam env) && dune build && dune exec ocaml {size}")
+
+# jsSieve
+os.system(f"node js/sieve.js {size}")
