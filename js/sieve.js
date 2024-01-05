@@ -31,9 +31,7 @@ class Sieve {
 }
 
 var limit = process.argv[2];
-
 var start = performance.now();
 var sieve = new Sieve(parseInt(limit));
 sieve.run()
 console.log(`Javascript    -- Duration: ${(performance.now() - start) / 1000} -- Count: ${sieve.count_primes()}`)
-
