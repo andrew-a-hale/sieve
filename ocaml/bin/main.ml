@@ -30,8 +30,7 @@ let rec next_bit sieve idx after =
     let bit = Array.get sieve.bits idx in
     match bit with
     | true when idx >= after -> idx
-    | false -> next_bit sieve (idx + 1) after
-    | _ -> idx (* failed to skip *)
+    | _ -> next_bit sieve (idx + 1) after
 ;;
 
 let run_sieve sieve =
@@ -44,7 +43,7 @@ let run_sieve sieve =
     )
     (* get next factor *)
     else (
-        if float_of_int(factor) <= q then (
+        if Float.of_int factor <= q then (
             let factor = factor + 1 in
             let factor = next_bit sieve factor factor in
             _run_sieve factor (2 * factor * (factor + 1))

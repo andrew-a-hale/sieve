@@ -58,8 +58,12 @@ os.system(f"rustc -C opt-level=3 -o rust/main rust/src/main.rs && ./rust/main {s
 os.system(f"Rscript R/sieve.R {size}")
 os.system(f"Rscript R/rcpp_sieve.R {size}")
 
-# OCamlSieve 
+# OCamlSieve
 os.system(f"cd ocaml && eval $(opam env) && dune build && dune exec ocaml {size}")
 
 # jsSieve
 os.system(f"node js/sieve.js {size}")
+
+# elixirSieve
+if size <= 100_000:
+    os.system(f"cd elixir/sieve && mix run lib/sieve.ex {size}")
