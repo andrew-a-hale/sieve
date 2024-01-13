@@ -12,6 +12,7 @@ Prime Sieve in multiple languages
 - Rcpp
 - OCaml
 - Javascript
+- Elixir
 - Mojo (todo)
 
 # Results
@@ -91,6 +92,9 @@ Julia at 100,000,000 primes is significantly faster comparatively. Unsure why th
 
 ## OCaml
 A more functional OCaml sieve was too slow (x10,000 slower than the fast version for primes up to 1,000,000 and worse for larger n) and was omitted, but the code is still in `ocaml/bin/main.ml`.
+
+## Elixir
+Omitted from all benchmarks due to being to slow with the current implementation.
 
 # Run
 Use `python main.py <n>` to run the sieves. This script will also compile the cython, rust, go, ocaml, and rcpp programs on each run.
