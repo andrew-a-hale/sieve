@@ -11,7 +11,7 @@ Prime Sieve in multiple languages
 - R
 - Rcpp
 - OCaml
-- Javascript
+- JS (NodeJS + Bun)
 - Elixir
 - Mojo (todo)
 
@@ -33,7 +33,8 @@ Rust          -- Duration: 0.00079 -- Count: 78498
 R             -- Duration: 0.0358779430389404 -- Count: 78498
 Rcpp          -- Duration: 0.00275206565856934 -- Count: 78498
 OCaml Fast    -- Duration: 0.018104 -- Count: 78498
-Javascript    -- Duration: 0.04250298285484314 -- Count: 78498
+NodeJS        -- Duration: 0.04081500911712647 -- Count: 78498
+Bun           -- Duration: 0.026611459 -- Count: 78498
 ```
 
 Calculating primes upto 10,000,000 with duration in seconds.
@@ -49,7 +50,8 @@ Rust          -- Duration: 0.009271 -- Count: 664579
 R             -- Duration: 0.240325927734375 -- Count: 664579
 Rcpp          -- Duration: 0.0274279117584229 -- Count: 664579
 OCaml Fast    -- Duration: 0.154751 -- Count: 664579
-Javascript    -- Duration: 0.3349671308994293 -- Count: 664579
+NodeJS        -- Duration: 0.3088058021068573 -- Count: 664579
+Bun           -- Duration: 0.09508575899999999 -- Count: 664579
 ```
 
 Calculating primes upto 100,000,000 with duration in seconds.
@@ -65,7 +67,8 @@ Rust          -- Duration: 0.293408 -- Count: 5761455
 R             -- Duration: 1.9012930393219 -- Count: 5761455
 Rcpp          -- Duration: 0.274863958358765 -- Count: 5761455
 OCaml Fast    -- Duration: 1.726690 -- Count: 5761455
-Javascript    -- Duration: 5.148028622865677 -- Count: 5761455
+NodeJS        -- Duration: 4.99445442199707 -- Count: 5761455
+Bun           -- Duration: 0.8920532379999999 -- Count: 5761455
 ```
 
 Calculating primes upto 1,000,000,000 with duration in seconds.
@@ -81,7 +84,8 @@ Rust          -- Duration: 3.9630520000000002 -- Count: 50847534
 R             -- Duration: 21.1558890342712 -- Count: 50847534
 Rcpp          -- Duration: 4.4062659740448 -- Count: 50847534
 OCaml Fast    -- Duration: 16.437602 -- Count: 50847534
-Javascript    -- Ran out of memory.
+NodeJS        -- Ran out of memory.
+Bun           -- Took too long.
 ```
 
 ## Julia Iterations
@@ -94,7 +98,7 @@ Julia at 100,000,000 primes is significantly faster comparatively. Unsure why th
 A more functional OCaml sieve was too slow (x10,000 slower than the fast version for primes up to 1,000,000 and worse for larger n) and was omitted, but the code is still in `ocaml/bin/main.ml`.
 
 ## Elixir
-Omitted from all benchmarks due to being to slow with the current implementation.
+Omitted from all benchmarks 
 
 # Run
 Use `python main.py <n>` to run the sieves. This script will also compile the cython, rust, go, ocaml, and rcpp programs on each run.

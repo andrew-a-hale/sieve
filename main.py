@@ -62,7 +62,8 @@ os.system(f"Rscript R/rcpp_sieve.R {size}")
 os.system(f"cd ocaml && eval $(opam env) && dune build && dune exec ocaml {size}")
 
 # jsSieve
-os.system(f"node js/sieve.js {size}")
+os.system(f"node js/sieve.js {size} NodeJS")
+os.system(f'bun js/sieve.js {size} "Bun   "')
 
 # elixirSieve
 if size <= 100_000:
