@@ -9,13 +9,7 @@ class Sieve {
         var q = Math.sqrt(this.size / 2) + 1;
 
         while (factor < q) {
-            // factor = this.bits.findIndex((val, i) => val && i >= factor);
-            for (var i = factor; i < this.size; i++) {
-              if (this.bits[i]) {
-                factor = i;
-                break;
-              }
-            };
+            factor = this.bits.findIndex((val, i) => val && i >= factor);
             var start = 2 * factor * (factor + 1);
             var step = 2 * factor + 1;
             for (var i = start; i < this.size; i += step) {
