@@ -18,7 +18,7 @@ Prime Sieve in multiple languages
 # Results
 The programs are single-threaded and not optimally written. This should not be taken as a benchmark for the languages.
 
-Below results were done on a 2.6ghz macbook with 16mb RAM.
+Below results were done on a 2.6ghz macbook with 16gb RAM.
 
 Calculating primes upto 1,000,000 with duration in seconds.
 ```
