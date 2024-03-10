@@ -1,9 +1,10 @@
 import os
-import python.fast_sieve as fs
-import python.sieve as s
-import python.np_sieve as ns
-import time
 import sys
+import time
+
+import python.fast_sieve as fs
+import python.np_sieve as ns
+import python.sieve as s
 
 if len(sys.argv) < 2:
     raise ValueError("missing size argument")
