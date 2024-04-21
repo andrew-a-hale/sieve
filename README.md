@@ -14,6 +14,7 @@ Prime Sieve in multiple languages
 - JS (NodeJS + Bun)
 - Elixir
 - Mojo (todo)
+- Java
 
 # Results
 The programs are single-threaded and not optimally written. This should not be taken as a benchmark for the languages.
@@ -35,6 +36,7 @@ Rcpp          -- Duration: 0.00275206565856934 -- Count: 78498
 OCaml Fast    -- Duration: 0.018104 -- Count: 78498
 NodeJS        -- Duration: 0.04081500911712647 -- Count: 78498
 Bun           -- Duration: 0.026611459 -- Count: 78498
+Java          -- Duration:             -- Count:      
 ```
 
 Calculating primes upto 10,000,000 with duration in seconds.
@@ -52,6 +54,7 @@ Rcpp          -- Duration: 0.0274279117584229 -- Count: 664579
 OCaml Fast    -- Duration: 0.154751 -- Count: 664579
 NodeJS        -- Duration: 0.3088058021068573 -- Count: 664579
 Bun           -- Duration: 0.09508575899999999 -- Count: 664579
+Java          -- Duration:             -- Count:      
 ```
 
 Calculating primes upto 100,000,000 with duration in seconds.
@@ -69,6 +72,7 @@ Rcpp          -- Duration: 0.274863958358765 -- Count: 5761455
 OCaml Fast    -- Duration: 1.726690 -- Count: 5761455
 NodeJS        -- Duration: 4.99445442199707 -- Count: 5761455
 Bun           -- Duration: 0.8920532379999999 -- Count: 5761455
+Java          -- Duration:             -- Count:      
 ```
 
 Calculating primes upto 1,000,000,000 with duration in seconds.
@@ -86,6 +90,7 @@ Rcpp          -- Duration: 4.4062659740448 -- Count: 50847534
 OCaml Fast    -- Duration: 16.437602 -- Count: 50847534
 NodeJS        -- Ran out of memory.
 Bun           -- Took too long.
+Java          -- Duration:             -- Count:      
 ```
 
 ## Julia Iterations
