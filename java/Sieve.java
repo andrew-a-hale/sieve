@@ -1,9 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * sieve
- */
 public class Sieve {
 	int bitslength;
 	ArrayList<Boolean> bits;
