@@ -72,4 +72,4 @@ if size <= 100_000:
     os.system(f"cd elixir/sieve && mix run lib/sieve.ex {size}")
 
 # JavaSieve
-os.system(f"cd java/sieve && javac Sieve.java && java Sieve {size}")
+os.system(f"cd java && javac Sieve.java && java Sieve {size}")

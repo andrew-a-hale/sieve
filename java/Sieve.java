@@ -1,13 +1,14 @@
-import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Collections;
 
 public class Sieve {
 	int bitslength;
-	ArrayList<Boolean> bits;
+	BitSet bits;
 
 	public Sieve(int limit) {
 		bitslength = (limit + 1) / 2;
-		bits = new ArrayList<Boolean>(Collections.nCopies(bitslength, true));
+		bits = new BitSet(bitslength);
+		bits.flip(0, bitslength);
 	}
 
 	public void run() {
@@ -16,22 +17,23 @@ public class Sieve {
 		double q = Math.sqrt(this.bitslength / 2);
 
 		for (int factor = 1; factor < q; factor++) {
-			factor += this.bits.subList(factor, this.bitslength).indexOf(true);
-			if (factor < 0) {
-				break;
+			for (int i = factor; i < bitslength; i++) {
+				if (this.bits.get(i)) {
+					factor = i;
+					break;
+				}
 			}
 
 			start = 2 * factor * (factor + 1);
 			step = 2 * factor + 1;
-			while (start < this.bitslength) {
-				this.bits.set(start, false);
-				start += step;
+			for (int i = start; i < this.bitslength; i += step) {
+				this.bits.clear(i);
 			}
 		}
 	}
 
 	public long check() {
-		return this.bits.stream().filter(x -> x).count();
+		return this.bits.cardinality();
 	}
 
 	public static void main(String[] args) {
