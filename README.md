@@ -19,60 +19,58 @@ Prime Sieve in multiple languages
 # Results
 The programs are single-threaded and not optimally written. This should not be taken as a benchmark for the languages.
 
-Below results were done on a 2.6ghz macbook with 16gb RAM.
-
 Calculating primes upto 1,000,000 with duration in seconds.
 ```
-Cython        -- Duration: 0.0010541419906076044 -- Count: 78498
-Python Fast   -- Duration: 0.001440813997760415 -- Count: 78498
-Python Normal -- Duration: 0.008162404003087431 -- Count: 78498
-Python Numpy  -- Duration: 0.002488642989192158 -- Count: 78498
-Go            -- Duration: 0.001160 -- Count: 78498
-Julia Iter: 0 -- Duration: 0.012526988983154297 -- Count: 78498
-Julia Iter: 1 -- Duration: 0.0007979869842529297 -- Count: 78498
-Rust          -- Duration: 0.00079 -- Count: 78498
-R             -- Duration: 0.0358779430389404 -- Count: 78498
-Rcpp          -- Duration: 0.00275206565856934 -- Count: 78498
-OCaml Fast    -- Duration: 0.018104 -- Count: 78498
-NodeJS        -- Duration: 0.04081500911712647 -- Count: 78498
-Bun           -- Duration: 0.026611459 -- Count: 78498
-Java          -- Duration:             -- Count:      
+Cython        -- Duration: 0.00034767703618854284 -- Count: 78498
+Python Fast   -- Duration: 0.0006087810033932328 -- Count: 78498
+Python Normal -- Duration: 0.002821333007887006 -- Count: 78498
+Python Numpy  -- Duration: 0.0011631520465016365 -- Count: 78498
+Go            -- Duration: 0.000731 -- Count: 78498
+Julia Iter: 0 -- Duration: 0.0029349327087402344 -- Count: 78498
+Julia Iter: 1 -- Duration: 0.00037980079650878906 -- Count: 78498
+Rust          -- Duration: 0.000444999 -- Count: 78498
+R             -- Duration: 0.0179712772369385 -- Count: 78498
+Rcpp          -- Duration: 0.000938177108764648 -- Count: 78498
+OCaml Fast    -- Duration: 0.004515 -- Count: 78498
+NodeJS        -- Duration: 0.01837072694301605 -- Count: 78498
+Bun           -- Duration: 0.005889131000000001 -- Count: 78498
+Java          -- Duration: 0.004634 -- Count: 78498
 ```
 
 Calculating primes upto 10,000,000 with duration in seconds.
 ```
-Cython        -- Duration: 0.012311583006521687 -- Count: 664579
-Python Fast   -- Duration: 0.014657235995400697 -- Count: 664579
-Python Normal -- Duration: 0.1944303260243032 -- Count: 664579
-Python Numpy  -- Duration: 0.04000113799702376 -- Count: 664579
-Go            -- Duration: 0.015117 -- Count: 664579
-Julia Iter: 0 -- Duration: 0.021266937255859375 -- Count: 664579
-Julia Iter: 1 -- Duration: 0.008841991424560547 -- Count: 664579
-Rust          -- Duration: 0.009271 -- Count: 664579
-R             -- Duration: 0.240325927734375 -- Count: 664579
-Rcpp          -- Duration: 0.0274279117584229 -- Count: 664579
-OCaml Fast    -- Duration: 0.154751 -- Count: 664579
-NodeJS        -- Duration: 0.3088058021068573 -- Count: 664579
-Bun           -- Duration: 0.09508575899999999 -- Count: 664579
-Java          -- Duration:             -- Count:      
+Cython        -- Duration: 0.003894323017448187 -- Count: 664579
+Python Fast   -- Duration: 0.006021483975928277 -- Count: 664579
+Python Normal -- Duration: 0.06533905398100615 -- Count: 664579
+Python Numpy  -- Duration: 0.012452005001250654 -- Count: 664579
+Go            -- Duration: 0.006686 -- Count: 664579
+Julia Iter: 0 -- Duration: 0.007447957992553711 -- Count: 664579
+Julia Iter: 1 -- Duration: 0.00478816032409668 -- Count: 664579
+Rust          -- Duration: 0.004827041 -- Count: 664579
+R             -- Duration: 0.0795862674713135 -- Count: 664579
+Rcpp          -- Duration: 0.00805234909057617 -- Count: 664579
+OCaml Fast    -- Duration: 0.048284 -- Count: 664579
+NodeJS        -- Duration: 0.16200657498836518 -- Count: 664579
+Bun           -- Duration: 0.042294568 -- Count: 664579
+Java          -- Duration: 0.012866 -- Count: 664579
 ```
 
 Calculating primes upto 100,000,000 with duration in seconds.
 ```
-Cython        -- Duration: 0.30929452800774015 -- Count: 5761455
-Python Fast   -- Duration: 0.3861277360119857 -- Count: 5761455
-Python Normal -- Duration: 2.442796892981278 -- Count: 5761455
-Python Numpy  -- Duration: 0.9450715290149674 -- Count: 5761455
-Go            -- Duration: 0.334042 -- Count: 5761455
-Julia Iter: 0 -- Duration: 0.11601495742797852 -- Count: 5761455
-Julia Iter: 1 -- Duration: 0.1167299747467041 -- Count: 5761455
-Rust          -- Duration: 0.293408 -- Count: 5761455
-R             -- Duration: 1.9012930393219 -- Count: 5761455
-Rcpp          -- Duration: 0.274863958358765 -- Count: 5761455
-OCaml Fast    -- Duration: 1.726690 -- Count: 5761455
-NodeJS        -- Duration: 4.99445442199707 -- Count: 5761455
-Bun           -- Duration: 0.8920532379999999 -- Count: 5761455
-Java          -- Duration:             -- Count:      
+Cython        -- Duration: 0.16573790996335447 -- Count: 5761455
+Python Fast   -- Duration: 0.17573900002753362 -- Count: 5761455
+Python Normal -- Duration: 0.7769032049691305 -- Count: 5761455
+Python Numpy  -- Duration: 0.4871221029898152 -- Count: 5761455
+Go            -- Duration: 0.074234 -- Count: 5761455
+Julia Iter: 0 -- Duration: 0.05281710624694824 -- Count: 5761455
+Julia Iter: 1 -- Duration: 0.049902915954589844 -- Count: 5761455
+Rust          -- Duration: 0.053659681 -- Count: 5761455
+R             -- Duration: 1.00384616851807 -- Count: 5761455
+Rcpp          -- Duration: 0.124225378036499 -- Count: 5761455
+OCaml Fast    -- Duration: 0.762027 -- Count: 5761455
+NodeJS        -- Duration: 2.711799802005291 -- Count: 5761455
+Bun           -- Duration: 0.672857661 -- Count: 5761455
+Java          -- Duration: 0.084811 -- Count: 5761455
 ```
 
 Calculating primes upto 1,000,000,000 with duration in seconds.
@@ -90,7 +88,7 @@ Rcpp          -- Duration: 4.4062659740448 -- Count: 50847534
 OCaml Fast    -- Duration: 16.437602 -- Count: 50847534
 NodeJS        -- Ran out of memory.
 Bun           -- Took too long.
-Java          -- Duration:             -- Count:      
+Java          -- Duration: 2.184566 -- Count: 50847534
 ```
 
 ## Julia Iterations

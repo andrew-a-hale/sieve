@@ -47,13 +47,13 @@ count = sieve.check_primes()
 print(f"Python Numpy  -- Duration: {duration} -- Count: {count}")
 
 # GoSieve
-os.system(f"go run go/main.go {size}")
+os.system(f"cd go && go run main.go {size}")
 
 # JuliaSieve
 os.system(f"julia julia/main.jl {size}")
 
 # RustSieve
-os.system(f"rustc -C opt-level=3 -o rust/main rust/src/main.rs && ./rust/main {size}")
+os.system(f"cd rust && cargo run -q --release {size}")
 
 # RSieve
 os.system(f"Rscript R/sieve.R {size}")

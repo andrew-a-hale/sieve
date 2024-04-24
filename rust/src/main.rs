@@ -1,16 +1,18 @@
 use std::{env, time::SystemTime};
 
+use fixedbitset::FixedBitSet;
+
 pub struct Sieve {
     bitslength: usize,
-    bits: Vec<bool>,
+    bits: FixedBitSet,
 }
 
 impl Sieve {
     fn new(limit: usize) -> Sieve {
-        Sieve {
-            bitslength: (limit + 1) / 2,
-            bits: vec![true; (limit + 1) / 2],
-        }
+        let bitslength: usize = (limit + 1) / 2;
+        let mut bits: FixedBitSet = FixedBitSet::with_capacity(bitslength);
+        bits.toggle_range(..);
+        Sieve { bitslength, bits }
     }
 
     fn run(&mut self) {
@@ -32,7 +34,7 @@ impl Sieve {
             step = 2 * factor + 1;
             start = 2 * factor * (factor + 1);
             for i in (start..self.bitslength).step_by(step) {
-                self.bits[i] = false;
+                self.bits.set(i, false);
             }
 
             factor += 1;
@@ -40,14 +42,7 @@ impl Sieve {
     }
 
     fn count_primes(self) -> usize {
-        let mut sum: usize = 0;
-        for b in self.bits.iter() {
-            if *b {
-                sum += 1;
-            }
-        }
-
-        sum
+        self.bits.count_ones(..)
     }
 }
 

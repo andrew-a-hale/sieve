@@ -1,36 +1,36 @@
 package main
 
 import (
-	"strconv"
-	"os"
-	"math"
-	"time"
 	"fmt"
+	"math"
+	"os"
+	"strconv"
+	"time"
+
+	"github.com/bits-and-blooms/bitset"
 )
 
 type Sieve struct {
-	bitslength int
-	bits []bool
+	bitslength uint
+	bits       *bitset.BitSet
 }
 
 func SieveFactory(limit int) Sieve {
-	bitslength := (limit + 1) / 2
-	bits := make([]bool, bitslength)
-	for i := 0; i < bitslength; i++ {
-		bits[i] = true
-	}
+	bitslength := uint((limit + 1) / 2)
+	bits := bitset.New(uint(bitslength))
+	bits = bits.Complement()
 
 	return Sieve{bits: bits, bitslength: bitslength}
 }
 
 func (s Sieve) run() {
-	q := int(math.Sqrt(float64(s.bitslength / 2))) + 1
-	var start, step int
+	q := uint(math.Sqrt(float64(s.bitslength/2))) + 1
+	var factor, start, step uint
 
-	for factor := 1; factor < q; factor++ {
+	for factor = 1; factor < q; factor++ {
 		// find next bits
 		for i := factor; i < s.bitslength; i++ {
-			if s.bits[i] {
+			if s.bits.Test(i) {
 				factor = i
 				break
 			}
@@ -38,21 +38,15 @@ func (s Sieve) run() {
 
 		// mark numbers
 		start = 2 * factor * (factor + 1)
-		step = 2 * factor + 1
-		for ; start < s.bitslength; start+=step {
-			s.bits[start] = false
+		step = 2*factor + 1
+		for i := start; i < s.bitslength; i += step {
+			s.bits.Clear(i)
 		}
 	}
 }
 
-func (s Sieve) check_primes() int {
-	count := 0	
-	for _, b := range s.bits {
-		if b {
-			count++
-		}
-	}
-	return count
+func (s Sieve) check_primes() uint {
+	return s.bits.Count()
 }
 
 func main() {
@@ -62,3 +56,4 @@ func main() {
 	sieve.run()
 	fmt.Printf("Go            -- Duration: %f -- Count: %d\n", time.Since(start).Seconds(), sieve.check_primes())
 }
+
