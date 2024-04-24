@@ -75,17 +75,17 @@ Java          -- Duration: 0.084811 -- Count: 5761455
 
 Calculating primes upto 1,000,000,000 with duration in seconds.
 ```
-Cython        -- Duration: 4.560784330999013 -- Count: 50847534
-Python Fast   -- Duration: 4.730918754998129 -- Count: 50847534
-Python Normal -- Duration: 37.52011579897953 -- Count: 50847534
-Python Numpy  -- Duration: 15.579333100002259 -- Count: 50847534
-Go            -- Duration: 4.171424 -- Count: 50847534
-Julia Iter: 0 -- Duration: 3.87786602973938 -- Count: 50847534
-Julia Iter: 1 -- Duration: 3.729544162750244 -- Count: 50847534
-Rust          -- Duration: 3.9630520000000002 -- Count: 50847534
-R             -- Duration: 21.1558890342712 -- Count: 50847534
-Rcpp          -- Duration: 4.4062659740448 -- Count: 50847534
-OCaml Fast    -- Duration: 16.437602 -- Count: 50847534
+Cython        -- Duration: 3.3678588579641655 -- Count: 50847534
+Python Fast   -- Duration: 3.9549306299886666 -- Count: 50847534
+Python Normal -- Duration: 10.574113044014666 -- Count: 50847534
+Python Numpy  -- Duration: 13.497182971972506 -- Count: 50847534
+Go            -- Duration: 2.102355 -- Count: 50847534
+Julia Iter: 0 -- Duration: 1.7935380935668945 -- Count: 50847534
+Julia Iter: 1 -- Duration: 1.7679541110992432 -- Count: 50847534
+Rust          -- Duration: 1.897316789 -- Count: 50847534
+R             -- Duration: 9.97158002853394 -- Count: 50847534
+Rcpp          -- Duration: 2.26693892478943 -- Count: 50847534
+OCaml Fast    -- Duration: 8.653333 -- Count: 50847534
 NodeJS        -- Ran out of memory.
 Bun           -- Took too long.
 Java          -- Duration: 2.184566 -- Count: 50847534
