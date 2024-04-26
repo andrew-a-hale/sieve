@@ -1,7 +1,9 @@
 # Sieve
+
 Prime Sieve in multiple languages
 
-# Languages
+## Languages
+
 - Python
 - Python + NumPy
 - Cython
@@ -16,10 +18,12 @@ Prime Sieve in multiple languages
 - Mojo (todo)
 - Java
 
-# Results
+## Results
+
 The programs are single-threaded and not optimally written. This should not be taken as a benchmark for the languages.
 
 Calculating primes upto 1,000,000 with duration in seconds.
+
 ```
 Cython        -- Duration: 0.00034767703618854284 -- Count: 78498
 Python Fast   -- Duration: 0.0006087810033932328 -- Count: 78498
@@ -38,6 +42,7 @@ Java          -- Duration: 0.004634 -- Count: 78498
 ```
 
 Calculating primes upto 10,000,000 with duration in seconds.
+
 ```
 Cython        -- Duration: 0.003894323017448187 -- Count: 664579
 Python Fast   -- Duration: 0.006021483975928277 -- Count: 664579
@@ -56,6 +61,7 @@ Java          -- Duration: 0.012866 -- Count: 664579
 ```
 
 Calculating primes upto 100,000,000 with duration in seconds.
+
 ```
 Cython        -- Duration: 0.16573790996335447 -- Count: 5761455
 Python Fast   -- Duration: 0.17573900002753362 -- Count: 5761455
@@ -91,20 +97,26 @@ Bun           -- Took too long.
 Java          -- Duration: 2.184566 -- Count: 50847534
 ```
 
-## Julia Iterations
+### Julia Iterations
+
 Julia is a JIT compiled language and benefits significantly from a warm-up run when calculating smaller amounts of primes and has less benefit for more primes.
 
-## Julia Issue
+### Julia Issue
+
 Julia at 100,000,000 primes is significantly faster comparatively. Unsure why this is the case.
 
-## OCaml
+### OCaml
+
 A more functional OCaml sieve was too slow (x10,000 slower than the fast version for primes up to 1,000,000 and worse for larger n) and was omitted, but the code is still in `ocaml/bin/main.ml`.
 
-## Elixir
-Omitted from all benchmarks 
+### Elixir
 
-# Run
+Omitted from all benchmarks
+
+## Run
+
 Use `python main.py <n>` to run the sieves. This script will also compile the cython, rust, go, ocaml, and rcpp programs on each run.
 
-## Dependencies
+### Dependencies
+
 The python script assumes that normal tooling and some packages have been installed for each of the languages.
