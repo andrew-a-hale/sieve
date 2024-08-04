@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/bits-and-blooms/bitset"
+	"sieve/bitset"
 )
 
 type Sieve struct {
@@ -18,7 +18,6 @@ type Sieve struct {
 func SieveFactory(limit int) Sieve {
 	bitslength := uint((limit + 1) / 2)
 	bits := bitset.New(uint(bitslength))
-	bits = bits.Complement()
 
 	return Sieve{bits: bits, bitslength: bitslength}
 }
@@ -56,4 +55,3 @@ func main() {
 	sieve.run()
 	fmt.Printf("Go            -- Duration: %f -- Count: %d\n", time.Since(start).Seconds(), sieve.check_primes())
 }
-
