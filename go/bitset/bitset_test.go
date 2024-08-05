@@ -1,8 +1,6 @@
 package bitset
 
-import (
-	"testing"
-)
+import "testing"
 
 func TestGet(t *testing.T) {
 	bs := New(10)
@@ -45,10 +43,19 @@ func TestSet(t *testing.T) {
 
 func TestFlip(t *testing.T) {
 	bs := New(4)
-	bs.Flip()
 
+	bs.Flip()
 	if val := bs.Get(1); val != 0 {
 		t.Errorf("Expected '0' got %v\n", val)
+	}
+
+	bs.Flip()
+	if val := bs.Get(1); val != 1 {
+		t.Errorf("Expected '1' got %v\n", val)
+	}
+
+	if val := bs.Len(); val != 4 {
+		t.Errorf("Expected '4' got %v\n", val)
 	}
 }
 
@@ -57,6 +64,11 @@ func TestMostSignificantBit(t *testing.T) {
 
 	if val := bs.mostSignificantBit(); val != 3 {
 		t.Errorf("Expected '3' got %v\n", val)
+	}
+
+	bs.Clear(3)
+	if val := bs.mostSignificantBit(); val != 2 {
+		t.Errorf("Expected '2' got %v\n", val)
 	}
 }
 

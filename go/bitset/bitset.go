@@ -8,7 +8,7 @@ type BitSet struct {
 }
 
 const (
-	wordSize = 1 << 6
+	wordSize = uint(1 << 6)
 	allBits  = 0xffffffffffffffff
 )
 
@@ -26,6 +26,10 @@ func New(length uint) *BitSet {
 	}
 
 	return &BitSet{length: length, data: set}
+}
+
+func (bs *BitSet) Len() uint {
+	return bs.length
 }
 
 func (bs *BitSet) Get(i uint) uint {
@@ -78,13 +82,22 @@ func (bs *BitSet) Count() uint {
 
 func (bs *BitSet) String() string {
 	s := ""
-	for _, bs := range bs.data {
-		tmp := bs
-		for i := 0; i < wordSize; i++ {
+	for _, bitset := range bs.data {
+		tmp := bitset
+		var i uint
+		for i = 0; i < wordSize; i++ {
 			s += fmt.Sprint(tmp & 1)
+			if len(s) == int(bs.Len()) {
+				break
+			}
 			tmp >>= 1
 		}
 	}
 
-	return s
+	var r []byte
+	for i := len(s) - 1; i >= 0; i-- {
+		r = append(r, s[i])
+	}
+
+	return string(r)
 }
