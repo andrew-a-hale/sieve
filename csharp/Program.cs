@@ -25,7 +25,7 @@ class Sieve
     {
       for (int i = factor; i < size; i++)
       {
-        if (!bits.Get(i))
+        if (!bits[i])
         {
           factor = i;
           break;
@@ -36,7 +36,7 @@ class Sieve
       step = (2 * factor) + 1;
       for (int i = start; i < size; i += step)
       {
-        bits.Set(i, true);
+        bits[i] = true;
       }
 
       factor++;
@@ -45,7 +45,7 @@ class Sieve
 
   int Check()
   {
-    return bits.Count;
+    return bits.Cast<bool>().Count(x => !x);
   }
 
   static void Main(string[] args)
