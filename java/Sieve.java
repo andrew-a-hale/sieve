@@ -14,9 +14,10 @@ public class Sieve {
 	public void run() {
 		int start;
 		int step;
+    int factor = 1;
 		double q = Math.sqrt(this.bitslength / 2);
 
-		for (int factor = 1; factor < q; factor++) {
+    while (factor < q) {
 			for (int i = factor; i < bitslength; i++) {
 				if (this.bits.get(i)) {
 					factor = i;
@@ -29,8 +30,9 @@ public class Sieve {
 			for (int i = start; i < this.bitslength; i += step) {
 				this.bits.clear(i);
 			}
+
+      factor += 1;
 		}
-	}
 
 	public long check() {
 		return this.bits.cardinality();

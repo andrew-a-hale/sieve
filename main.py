@@ -73,3 +73,9 @@ if size <= 100_000:
 
 # JavaSieve
 os.system(f"cd java && javac Sieve.java && java Sieve {size}")
+
+# CppSieve
+os.system(f"cd cpp && ./main {size}")
+
+# CsSieve
+os.system(f"cd csharp && ./main/csharp - {size}")

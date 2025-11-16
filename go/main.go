@@ -24,9 +24,10 @@ func SieveFactory(limit int) Sieve {
 
 func (s Sieve) run() {
 	q := uint(math.Sqrt(float64(s.bitslength/2))) + 1
-	var factor, start, step uint
+	var start, step uint
+	var factor uint = 1
 
-	for factor = 1; factor < q; factor++ {
+	for factor < q {
 		// find next bits
 		for i := factor; i < s.bitslength; i++ {
 			if s.bits.Test(i) {
@@ -41,6 +42,8 @@ func (s Sieve) run() {
 		for i := start; i < s.bitslength; i += step {
 			s.bits.Clear(i)
 		}
+
+		factor += 1
 	}
 }
 
