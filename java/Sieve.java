@@ -33,6 +33,7 @@ public class Sieve {
 
       factor += 1;
 		}
+  }
 
 	public long check() {
 		return this.bits.cardinality();

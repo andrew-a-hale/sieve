@@ -19,3 +19,6 @@ Prime Sieve in multiple languages
 - Cpp
 - C#
 
+### TODO
+- Zig
+- DuckDB

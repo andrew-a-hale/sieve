@@ -15,8 +15,8 @@ public:
     size = (limit + 1) / 2;
     bits.resize(size);
   }
+  int64_t check() { return this->size - this->bits.count(); };
   void run();
-  int64_t check();
 };
 
 void Sieve::run() {
@@ -42,8 +42,6 @@ void Sieve::run() {
     factor += 1;
   };
 }
-
-int64_t Sieve::check() { return this->size - this->bits.count(); };
 
 int main(int argc, char *argv[]) {
   if (argc == 1) {

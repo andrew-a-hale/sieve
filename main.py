@@ -2,6 +2,7 @@ import os
 import sys
 import time
 
+import python.cython_sieve as cs
 import python.fast_sieve as fs
 import python.np_sieve as ns
 import python.sieve as s
@@ -11,8 +12,9 @@ if len(sys.argv) < 2:
 size = int(sys.argv[1])
 
 # CythonSieve
-os.system("cd cython && python3 setup.py build_ext --inplace && mv *.so ../python/")
-import python.cython_sieve as cs
+os.system(
+    "cd cython && python3 setup.py build_ext --inplace > /dev/null && mv *.so ../python/"
+)
 
 start = time.perf_counter()
 sieve = cs.CSieve(size)
@@ -69,7 +71,7 @@ if size <= 100_000_000:
 
 # elixirSieve
 if size <= 100_000:
-    os.system(f"cd elixir/sieve && mix run lib/sieve.ex {size}")
+    os.system(f"cd elixir && elixir sieve.exs {size}")
 
 # JavaSieve
 os.system(f"cd java && javac Sieve.java && java Sieve {size}")
@@ -79,3 +81,6 @@ os.system(f"cd cpp && make > /dev/null && ./main {size}")
 
 # CsSieve
 os.system(f"cd csharp && make > /dev/null && ./main/csharp - {size}")
+
+# ZigSieve
+os.system(f"cd zig && zig run -O ReleaseFast main.zig -- {size}")

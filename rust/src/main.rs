@@ -9,7 +9,7 @@ pub struct Sieve {
 
 impl Sieve {
     fn new(limit: usize) -> Sieve {
-        let bitslength: usize = (limit + 1) / 2;
+        let bitslength: usize = limit.div_ceil(2);
         let mut bits: FixedBitSet = FixedBitSet::with_capacity(bitslength);
         bits.toggle_range(..);
         Sieve { bitslength, bits }

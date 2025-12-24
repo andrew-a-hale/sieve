@@ -48,12 +48,23 @@ defmodule Sieve do
   end
 end
 
-arg = Enum.at(System.argv(), 0)
 start = Time.utc_now()
-{limit, _} = Integer.parse(arg)
-size = div(limit + 1, 2)
-sieve = Sieve.new(size)
-bits = Sieve.run(size, sieve, 1, 4)
-time = Time.diff(Time.utc_now(), start, :microsecond) / 1_000_000
-count = Sieve.count_primes(bits, 0)
-IO.puts("Elixir        -- Duration: #{time} -- Count: #{count}\n")
+
+case Enum.at(System.argv(), 0) do
+  nil ->
+    nil
+
+  x ->
+    case Integer.parse(x) do
+      :error ->
+        exit("failed to parse input")
+
+      {limit, _} ->
+        size = div(limit + 1, 2)
+        sieve = Sieve.new(size)
+        bits = Sieve.run(size, sieve, 1, 4)
+        time = Time.diff(Time.utc_now(), start, :microsecond) / 1_000_000
+        count = Sieve.count_primes(bits, 0)
+        IO.puts("Elixir        -- Duration: #{time} -- Count: #{count}")
+    end
+end
