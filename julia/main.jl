@@ -31,12 +31,12 @@ end
 # warmup
 limit = parse(Int, ARGS[1])
 for i in 0:1
-    start = time()
-    sieve = Sieve(limit)
-    run(sieve)
-    timing = time() - start
-    primes = check_primes(sieve)
-    println("Julia Iter: $i -- Duration: $timing -- Count: $primes")
+  start = time_ns()
+  sieve = Sieve(limit)
+  run(sieve)
+  count = check_primes(sieve)
+  duration = round(Int, (time_ns() - start) / 1e6)
+  println("Julia Iter: $i -- Duration: $(duration)ms -- Count: $count")
 end
 
 end

@@ -40,14 +40,18 @@ check_primes <- function(s) {
 args <- commandArgs(trailingOnly = TRUE)
 limit <- as.numeric(args[1])
 start <- Sys.time()
-s <- limit |> sieve() |> run()
-time <- Sys.time() - start
+s <- limit |>
+  sieve() |>
+  run()
+count <- check_primes(s)
+duration <- floor(as.numeric(Sys.time() - start) * 1000)
+
 cat(
   paste0(
     "R             -- Duration: ",
-    as.numeric(time),
-    " -- Count: ",
-    check_primes(s),
+    duration,
+    "ms -- Count: ",
+    count,
     "\n"
   )
 )

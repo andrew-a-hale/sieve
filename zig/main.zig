@@ -50,9 +50,10 @@ pub fn main() !void {
     errdefer _ = gpa.deinit();
 
     const bits = try sieve(allocator, n);
+    const count = bits.count();
 
     std.debug.print(
-        "Zig           -- Duration: {}ms -- Count: {}",
-        .{ (timer.lap() - start) / std.time.ns_per_ms, bits.count() },
+        "Zig           -- Duration: {}ms -- Count: {}\n",
+        .{ (timer.lap() - start) / std.time.ns_per_ms, count },
     );
 }

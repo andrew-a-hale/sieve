@@ -61,7 +61,9 @@ let fast_sieve =
     let start = Sys.time() in
     let sieve = limit |> create_sieve |> run_sieve in
     let time = Sys.time() -. start in
-    Printf.printf "OCaml Fast    -- Duration: %f -- Count: %d\n" time (count_primes sieve)
+    let duration = int_of_float(time *. 1000.0) in
+    let count = count_primes(sieve) in
+    Printf.printf "OCaml Fast    -- Duration: %dms -- Count: %d\n" duration count
 ;;
 
 let () =

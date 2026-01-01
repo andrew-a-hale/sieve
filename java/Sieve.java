@@ -41,11 +41,12 @@ public class Sieve {
 
 	public static void main(String[] args) {
 		int limit = Integer.parseInt(args[0]);
-		long start = System.nanoTime();
+		long start = System.currentTimeMillis();
 		Sieve sieve = new Sieve(limit);
 		sieve.run();
-		long end = System.nanoTime();
-		double duration = (end - start) / 1e9;
-		System.out.printf("Java          -- Duration: %f -- Count: %d\n", duration, sieve.check());
+    long count = sieve.check();
+		long end = System.currentTimeMillis();
+		long duration = (end - start);
+		System.out.printf("Java          -- Duration: %dms -- Count: %d\n", duration, count);
 	}
 }

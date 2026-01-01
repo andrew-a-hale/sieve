@@ -48,8 +48,6 @@ defmodule Sieve do
   end
 end
 
-start = Time.utc_now()
-
 case Enum.at(System.argv(), 0) do
   nil ->
     nil
@@ -61,10 +59,11 @@ case Enum.at(System.argv(), 0) do
 
       {limit, _} ->
         size = div(limit + 1, 2)
+        start = Time.utc_now()
         sieve = Sieve.new(size)
         bits = Sieve.run(size, sieve, 1, 4)
-        time = Time.diff(Time.utc_now(), start, :microsecond) / 1_000_000
         count = Sieve.count_primes(bits, 0)
-        IO.puts("Elixir        -- Duration: #{time} -- Count: #{count}")
+        time = Time.diff(Time.utc_now(), start, :millisecond)
+        IO.puts("Elixir        -- Duration: #{time}ms -- Count: #{count}")
     end
 end

@@ -56,5 +56,6 @@ func main() {
 	start := time.Now()
 	sieve := SieveFactory(int(limit))
 	sieve.run()
-	fmt.Printf("Go            -- Duration: %f -- Count: %d\n", time.Since(start).Seconds(), sieve.check_primes())
+	count := sieve.check_primes()
+	fmt.Printf("Go            -- Duration: %dms -- Count: %d\n", time.Since(start).Milliseconds(), count)
 }

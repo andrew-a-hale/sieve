@@ -54,6 +54,7 @@ int main(int argc, char *argv[]) {
 
   Sieve sieve = Sieve(limit);
   sieve.run();
+  auto count = sieve.check();
 
   std::chrono::time_point<std::chrono::system_clock> end =
       std::chrono::system_clock::now();
@@ -61,7 +62,6 @@ int main(int argc, char *argv[]) {
       std::chrono::duration_cast<std::chrono::milliseconds>(end - start)
           .count();
 
-  printf("C++           -- Duration: %ldms -- Count: %ld\n", duration,
-         sieve.check());
+  printf("C++           -- Duration: %ldms -- Count: %ld\n", duration, count);
   return 0;
 }

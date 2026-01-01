@@ -52,9 +52,10 @@ fn main() {
     let time = SystemTime::now();
     let mut sieve = Sieve::new(limit);
     sieve.run();
+    let count = sieve.count_primes();
     println!(
-        "Rust          -- Duration: {:?} -- Count: {}",
-        time.elapsed().unwrap().as_secs_f64(),
-        sieve.count_primes()
+        "Rust          -- Duration: {:?}ms -- Count: {}",
+        time.elapsed().unwrap().as_millis(),
+        count
     )
 }
