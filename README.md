@@ -29,7 +29,7 @@ Prime Sieve in multiple languages
 Cython        -- Duration: 2828ms   -- Count: 50847534
 Python Fast   -- Duration: 2939ms   -- Count: 50847534
 Python Normal -- Duration: 7284ms   -- Count: 50847534
-Python Numpy  -- Duration: 9778ms   -- Count: 50847534
+Python Numpy  -- Duration: 3253ms   -- Count: 50847534
 Go            -- Duration: 1837ms   -- Count: 50847534
 Julia Iter: 0 -- Duration: 1563ms   -- Count: 50847534 // warmup
 Julia Iter: 1 -- Duration: 1462ms   -- Count: 50847534
@@ -53,7 +53,7 @@ Elixir        -- Duration: 12701ms  -- Count: 78498    // too slow for 1_000_000
 Cython        -- Duration: 0ms     -- Count: 78498
 Python Fast   -- Duration: 0ms     -- Count: 78498
 Python Normal -- Duration: 3ms     -- Count: 78498
-Python Numpy  -- Duration: 1ms     -- Count: 78498
+Python Numpy  -- Duration: 0ms     -- Count: 78498
 Go            -- Duration: 0ms     -- Count: 78498
 Julia Iter: 0 -- Duration: 8ms     -- Count: 78498 // warmup
 Julia Iter: 1 -- Duration: 0ms     -- Count: 78498

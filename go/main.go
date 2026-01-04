@@ -4,10 +4,9 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"sieve/bitset"
 	"strconv"
 	"time"
-
-	"sieve/bitset"
 )
 
 type Sieve struct {
@@ -47,7 +46,7 @@ func (s Sieve) run() {
 	}
 }
 
-func (s Sieve) check_primes() uint {
+func (s Sieve) checkPrimes() uint {
 	return s.bits.Count()
 }
 
@@ -56,6 +55,6 @@ func main() {
 	start := time.Now()
 	sieve := SieveFactory(int(limit))
 	sieve.run()
-	count := sieve.check_primes()
+	count := sieve.checkPrimes()
 	fmt.Printf("Go            -- Duration: %dms -- Count: %d\n", time.Since(start).Milliseconds(), count)
 }

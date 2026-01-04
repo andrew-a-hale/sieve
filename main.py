@@ -78,7 +78,7 @@ else:
 
 
 # elixirSieve
-if size <= 1_000_000:
+if size <= 100_000:
     os.system(f"cd elixir && elixir sieve.exs {size}")
 else:
     print("Elixir        -- Duration: Skipped -- Too Slow")
@@ -97,7 +97,7 @@ os.system(f"cd csharp && make > /dev/null && ./main/csharp - {size}")
 os.system(f"cd zig && zig run -O ReleaseFast main.zig -- {size}")
 
 # DuckDBSieve
-if size <= 100_000_000:
+if size <= 10_000_000:
     os.system(f"cd duckdb && ./go.sh {size}")
 else:
     print("DuckDB        -- Duration: Skipped -- Too Slow\n")

@@ -1,3 +1,5 @@
+// Package bitset
+// Implementation of a dynamic sized bitset
 package bitset
 
 import "fmt"
@@ -54,7 +56,7 @@ func (bs *BitSet) Flip() {
 	}
 }
 
-func (bs *BitSet) mostSignificantBit() uint {
+func (bs *BitSet) MostSignificantBit() uint {
 	var i uint
 	var j uint
 	for _, bs := range bs.data {
@@ -84,8 +86,7 @@ func (bs *BitSet) String() string {
 	s := ""
 	for _, bitset := range bs.data {
 		tmp := bitset
-		var i uint
-		for i = 0; i < wordSize; i++ {
+		for range wordSize {
 			s += fmt.Sprint(tmp & 1)
 			if len(s) == int(bs.Len()) {
 				break

@@ -62,12 +62,12 @@ func TestFlip(t *testing.T) {
 func TestMostSignificantBit(t *testing.T) {
 	bs := New(4)
 
-	if val := bs.mostSignificantBit(); val != 3 {
+	if val := bs.MostSignificantBit(); val != 3 {
 		t.Errorf("Expected '3' got %v\n", val)
 	}
 
 	bs.Clear(3)
-	if val := bs.mostSignificantBit(); val != 2 {
+	if val := bs.MostSignificantBit(); val != 2 {
 		t.Errorf("Expected '2' got %v\n", val)
 	}
 }
