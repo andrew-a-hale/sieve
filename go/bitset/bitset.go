@@ -52,7 +52,7 @@ func (bs *BitSet) Clear(i uint) {
 
 func (bs *BitSet) Flip() {
 	for i := range bs.data {
-		bs.data[i] ^= (1 << (bs.length)) - 1
+		bs.data[i] ^= (1 << bs.length) - 1
 	}
 }
 

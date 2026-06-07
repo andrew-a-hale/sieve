@@ -38,7 +38,7 @@ check_primes <- function(s) {
 }
 
 args <- commandArgs(trailingOnly = TRUE)
-limit <- as.numeric(args[1])
+limit <- as.numeric(gsub("_", "", args[1]))
 start <- Sys.time()
 s <- limit |>
   sieve() |>

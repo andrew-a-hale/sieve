@@ -48,7 +48,7 @@ impl Sieve {
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    let limit: usize = args[1].parse::<usize>().unwrap();
+    let limit: usize = args[1].replace("_", "").parse::<usize>().unwrap();
     let time = SystemTime::now();
     let mut sieve = Sieve::new(limit);
     sieve.run();

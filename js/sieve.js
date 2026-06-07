@@ -30,11 +30,11 @@ class Sieve {
     }
 }
 
-var limit = process.argv[2];
+var limit = process.argv[2].replaceAll("_", "");
 var runtime = process.argv[3];
 var start = performance.now();
 var sieve = new Sieve(parseInt(limit));
 sieve.run()
 var count = sieve.count_primes();
 var duration = Math.floor(performance.now() - start);
-console.log(`${runtime}        -- Duration: ${duration}ms -- Count: ${count}`)
+console.log(`${runtime.padEnd(6)}        -- Duration: ${duration}ms -- Count: ${count}`)

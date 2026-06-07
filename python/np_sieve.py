@@ -6,7 +6,7 @@ import numpy as np
 class Sieve:
     def __init__(self, limit):
         self.bitslength = (limit + 1) // 2
-        self.bits = np.ones(self.bitslength, dtype=np.uint8)
+        self.bits = np.ones(self.bitslength, dtype=np.bool)
 
     def run(self):
         q = math.sqrt(self.bitslength / 2) + 1

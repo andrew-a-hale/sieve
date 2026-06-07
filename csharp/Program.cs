@@ -54,7 +54,8 @@ class Sieve
         if (args.Length == 1)
             throw new Exception("missing argument");
 
-        bool ok = int.TryParse(args[1], out int limit);
+        string input = args[1].Replace("_", "");
+        bool ok = int.TryParse(input, out int limit);
         if (!ok)
             throw new Exception("failed to parse argument");
 

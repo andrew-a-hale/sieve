@@ -34,26 +34,24 @@ pub fn sieve(allocator: std.mem.Allocator, n: usize) !std.bit_set.DynamicBitSet 
     return bits;
 }
 
-pub fn main() !void {
-    if (std.os.argv.len < 2) {
-        @panic("missing input expect an int");
+pub fn main(init: std.process.Init) !void {
+    const args = try init.minimal.args.toSlice(init.arena.allocator());
+
+    if (args.len < 2) {
+        @panic("missing input expect an sieve limit");
     }
 
-    const arg: []const u8 = std.mem.span(std.os.argv[1]);
-    const n: usize = try std.fmt.parseInt(usize, arg, 10);
+    const arg: []const u8 = std.mem.span(args[1].ptr);
+    var buf = try init.arena.allocator().alloc(u8, arg.len);
+    const replacements: usize = std.mem.replace(u8, arg, "_", "", buf);
+    buf = buf[0..(arg.len - replacements)];
+    const n: usize = try std.fmt.parseInt(usize, buf, 10);
 
-    var timer = try std.time.Timer.start();
-    const start: u64 = timer.lap();
-
-    var gpa = std.heap.GeneralPurposeAllocator(.{}).init;
-    const allocator = gpa.allocator();
-    errdefer _ = gpa.deinit();
-
-    const bits = try sieve(allocator, n);
+    const start = std.Io.Clock.real.now(init.io).toMilliseconds();
+    const bits = try sieve(init.arena.allocator(), n);
     const count = bits.count();
-
     std.debug.print(
         "Zig           -- Duration: {}ms -- Count: {}\n",
-        .{ (timer.lap() - start) / std.time.ns_per_ms, count },
+        .{ (std.Io.Clock.real.now(init.io).toMilliseconds() - start), count },
     );
 }

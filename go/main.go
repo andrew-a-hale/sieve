@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"math"
 	"os"
-	"sieve/bitset"
 	"strconv"
+	"strings"
 	"time"
+
+	"sieve/bitset"
 )
 
 type Sieve struct {
@@ -51,7 +53,8 @@ func (s Sieve) checkPrimes() uint {
 }
 
 func main() {
-	limit, _ := strconv.ParseInt(os.Args[1], 10, 0)
+	input := strings.ReplaceAll(os.Args[1], "_", "")
+	limit, _ := strconv.ParseInt(input, 10, 0)
 	start := time.Now()
 	sieve := SieveFactory(int(limit))
 	sieve.run()

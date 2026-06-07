@@ -2,7 +2,7 @@ library(Rcpp)
 sourceCpp("R/sieve.cpp")
 
 args <- commandArgs(trailingOnly = TRUE)
-limit <- as.numeric(args[1])
+limit <- as.numeric(gsub("_", "", args[1]))
 start <- Sys.time()
 s <- limit |> sieve()
 count <- check_primes(s)
