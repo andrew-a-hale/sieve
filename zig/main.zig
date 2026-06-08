@@ -48,7 +48,8 @@ pub fn main(init: std.process.Init) !void {
     const n: usize = try std.fmt.parseInt(usize, buf, 10);
 
     const start = std.Io.Clock.real.now(init.io).toMilliseconds();
-    const bits = try sieve(init.arena.allocator(), n);
+    const spm = std.heap.smp_allocator;
+    const bits = try sieve(spm, n);
     const count = bits.count();
     std.debug.print(
         "Zig           -- Duration: {}ms -- Count: {}\n",

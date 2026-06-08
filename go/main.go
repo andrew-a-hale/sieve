@@ -4,11 +4,10 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"sieve/bitset"
 	"strconv"
 	"strings"
 	"time"
-
-	"sieve/bitset"
 )
 
 type Sieve struct {

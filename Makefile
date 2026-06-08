@@ -37,7 +37,6 @@ exsieve:
 	else \
 		echo "Elixir        -- Duration: Skipped -- Too Slow"; \
 	fi
-
 javasieve:
 	cd java && javac Sieve.java && java Sieve $(SIZE)
 
