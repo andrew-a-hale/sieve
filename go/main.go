@@ -4,25 +4,26 @@ import (
 	"fmt"
 	"math"
 	"os"
-	"sieve/bitset"
 	"strconv"
 	"strings"
 	"time"
+
+	"sieve/bitset"
 )
 
-type Sieve struct {
+type sieve struct {
 	bitslength uint
 	bits       *bitset.BitSet
 }
 
-func SieveFactory(limit int) Sieve {
+func sieveFactory(limit int) sieve {
 	bitslength := uint((limit + 1) / 2)
 	bits := bitset.New(uint(bitslength))
 
-	return Sieve{bits: bits, bitslength: bitslength}
+	return sieve{bits: bits, bitslength: bitslength}
 }
 
-func (s Sieve) run() {
+func (s sieve) run() {
 	q := uint(math.Sqrt(float64(s.bitslength/2))) + 1
 	var start, step uint
 	var factor uint = 1
@@ -47,7 +48,7 @@ func (s Sieve) run() {
 	}
 }
 
-func (s Sieve) checkPrimes() uint {
+func (s sieve) checkPrimes() uint {
 	return s.bits.Count()
 }
 
@@ -55,7 +56,7 @@ func main() {
 	input := strings.ReplaceAll(os.Args[1], "_", "")
 	limit, _ := strconv.ParseInt(input, 10, 0)
 	start := time.Now()
-	sieve := SieveFactory(int(limit))
+	sieve := sieveFactory(int(limit))
 	sieve.run()
 	count := sieve.checkPrimes()
 	fmt.Printf("Go            -- Duration: %dms -- Count: %d\n", time.Since(start).Milliseconds(), count)

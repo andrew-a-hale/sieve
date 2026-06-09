@@ -8,8 +8,8 @@ static inline char GetBit(unsigned char *bits, long i) {
   return bits[i >> 3] >> (i & 7) & 1;
 }
 
-static inline char SetBit(unsigned char *bits, long i) {
-  return bits[i >> 3] |= 1 << (i & 7);
+static inline void SetBit(unsigned char *bits, long i) {
+  bits[i >> 3] |= 1 << (i & 7);
 }
 
 char *StringRemoveChar(char *s, char d) {

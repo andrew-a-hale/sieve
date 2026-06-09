@@ -1,3 +1,4 @@
 *.so
 __pycache__
 build
+cython_sieve.c
