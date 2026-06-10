@@ -16,7 +16,7 @@ Prime Sieve in multiple languages
 - JS (NodeJS + Bun)
 - Elixir
 - Java
-- Cpp
+- C
 - C#
 - Zig
 - DuckDB
@@ -38,7 +38,7 @@ R             -- Duration: 8453ms   -- Count: 50847534
 Rcpp          -- Duration: 2883ms   -- Count: 50847534
 OCaml Fast    -- Duration: 6907ms   -- Count: 50847534
 Java          -- Duration: 2027ms   -- Count: 50847534
-C++           -- Duration: 1679ms   -- Count: 50847534
+C             -- Duration: 1679ms   -- Count: 50847534
 C#            -- Duration: 2317ms   -- Count: 50847534
 Zig           -- Duration: 1331ms   -- Count: 50847534
 Bun           -- Duration: 186787ms -- Count: 50847534
@@ -65,7 +65,7 @@ NodeJS        -- Duration: 16ms    -- Count: 78498
 Bun           -- Duration: 7ms     -- Count: 78498
 Elixir        -- Duration: 12966ms -- Count: 78498
 Java          -- Duration: 5ms     -- Count: 78498
-C++           -- Duration: 0ms     -- Count: 78498
+C             -- Duration: 0ms     -- Count: 78498
 C#            -- Duration: 2ms     -- Count: 78498
 Zig           -- Duration: 0ms     -- Count: 78498
 DuckDB        -- Duration: 54ms    -- Count: 78498
