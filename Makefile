@@ -1,5 +1,5 @@
 SIZE ?= 1_000_000
-.SILENT: pysieve gosieve jlsieve rssieve rsieve mlsieve jssieve exsieve javasieve csieve cssieve dbsieve zigsieve
+.SILENT: pysieve gosieve jlsieve rssieve rsieve mlsieve jssieve exsieve javasieve csieve cssieve dbsieve zigsieve llmcsieve
 
 pysieve:
 	cd python && python run.py $(SIZE)
@@ -24,9 +24,7 @@ jssieve:
 	PARSED=$$(tr -d "_" <<< $(SIZE)); \
 	if [ $$PARSED -lt 1000000000 ]; then \
 		node js/sieve.js $(SIZE) NodeJS; \
-		bun js/sieve.js $(SIZE) Bun; \
-	else \
-		echo "NodeJS        -- Duration: Skipped -- Too Slow"; \
+		bun js/sieve.js $(SIZE) Bun; \ else \ echo "NodeJS        -- Duration: Skipped -- Too Slow"; \
 		echo "Bun           -- Duration: Skipped -- Too Slow"; \
 	fi
 
@@ -57,5 +55,8 @@ dbsieve:
 zigsieve:
 	cd zig && zig run -O ReleaseFast main.zig -- $(SIZE)
 
-run: pysieve gosieve jlsieve rssieve rsieve mlsieve jssieve exsieve javasieve csieve cssieve dbsieve zigsieve
+llmcsieve:
+	cd llm-c && make > /dev/null && ./main $(SIZE)
+
+run: pysieve gosieve jlsieve rssieve rsieve mlsieve jssieve exsieve javasieve csieve cssieve dbsieve zigsieve llmcsieve
 
