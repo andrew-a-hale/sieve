@@ -1,6 +1,8 @@
 package bitset
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestGet(t *testing.T) {
 	bs := New(10)
@@ -31,11 +33,11 @@ func TestClear(t *testing.T) {
 }
 
 func TestSet(t *testing.T) {
-	bs := New(10)
-	bs.Clear(0)
-	bs.Set(0)
+	bs := New(100)
+	bs.Clear(99)
+	bs.Set(99)
 
-	val := bs.Get(0)
+	val := bs.Get(99)
 	if val != 1 {
 		t.Errorf("Expected '1' got %v\n", val)
 	}
@@ -59,6 +61,24 @@ func TestFlip(t *testing.T) {
 	}
 }
 
+func TestFlipBig(t *testing.T) {
+	bs := New(100)
+
+	bs.Flip()
+	if val := bs.Get(99); val != 0 {
+		t.Errorf("Expected '0' got %v\n", val)
+	}
+
+	bs.Flip()
+	if val := bs.Get(99); val != 1 {
+		t.Errorf("Expected '1' got %v\n", val)
+	}
+
+	if val := bs.Len(); val != 100 {
+		t.Errorf("Expected '100' got %v\n", val)
+	}
+}
+
 func TestMostSignificantBit(t *testing.T) {
 	bs := New(4)
 
@@ -69,6 +89,16 @@ func TestMostSignificantBit(t *testing.T) {
 	bs.Clear(3)
 	if val := bs.MostSignificantBit(); val != 2 {
 		t.Errorf("Expected '2' got %v\n", val)
+	}
+}
+
+func TestMostSignificantBitBig(t *testing.T) {
+	bs := New(100)
+	bs.Flip()
+	bs.Set(99)
+
+	if val := bs.MostSignificantBit(); val != 99 {
+		t.Errorf("Expected '99' got %v\n", val)
 	}
 }
 
@@ -86,5 +116,17 @@ func TestCount(t *testing.T) {
 
 	if x := bs.Count(); x != 5 {
 		t.Errorf("Expected '5' got %v\n", x)
+	}
+}
+
+func TestCountBig(t *testing.T) {
+	bs := New(100)
+	if x := bs.Count(); x != 100 {
+		t.Errorf("Expected '100' got %v\n", x)
+	}
+	bs.Flip()
+	bs.Set(99)
+	if x := bs.Count(); x != 1 {
+		t.Errorf("Expected '1' got %v\n", x)
 	}
 }

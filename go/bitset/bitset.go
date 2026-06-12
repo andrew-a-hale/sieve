@@ -2,11 +2,14 @@
 // Implementation of a dynamic sized bitset
 package bitset
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type BitSet struct {
-	length uint
-	data   []uint
+	Length uint
+	Data   []uint
 }
 
 const (
@@ -27,15 +30,15 @@ func New(length uint) *BitSet {
 		set = append(set, (1<<leftover)-1)
 	}
 
-	return &BitSet{length: length, data: set}
+	return &BitSet{Length: length, Data: set}
 }
 
 func (bs *BitSet) Len() uint {
-	return bs.length
+	return bs.Length
 }
 
 func (bs *BitSet) Get(i uint) uint {
-	return uint(bs.data[i/wordSize] >> (i % wordSize) & 1)
+	return uint(bs.Data[i/wordSize] >> (i % wordSize) & 1)
 }
 
 func (bs *BitSet) Test(i uint) bool {
@@ -43,35 +46,40 @@ func (bs *BitSet) Test(i uint) bool {
 }
 
 func (bs *BitSet) Set(i uint) {
-	bs.data[i/wordSize] |= (1 << (i % wordSize))
+	bs.Data[i/wordSize] |= (1 << (i % wordSize))
 }
 
 func (bs *BitSet) Clear(i uint) {
-	bs.data[i/wordSize] &= (allBits ^ 1<<(i%wordSize))
+	bs.Data[i/wordSize] &= (allBits ^ 1<<(i%wordSize))
 }
 
 func (bs *BitSet) Flip() {
-	for i := range bs.data {
-		bs.data[i] ^= (1 << bs.length) - 1
+	leftover := bs.Length % wordSize
+	for i := range bs.Data {
+		if i == len(bs.Data)-1 {
+			bs.Data[i] ^= (1 << leftover) - 1
+		} else {
+			bs.Data[i] ^= allBits
+		}
 	}
 }
 
 func (bs *BitSet) MostSignificantBit() uint {
-	var i uint
+	var i int
 	var j uint
-	for _, bs := range bs.data {
-		tmp := bs
+	for i = 0; i < len(bs.Data); i++ {
+		tmp := bs.Data[i]
 		for j = 0; tmp > 0; j++ {
 			tmp >>= 1
 		}
 	}
 
-	return i*wordSize + j - 1
+	return uint(i-1)*wordSize + j - 1
 }
 
 func (bs *BitSet) Count() uint {
 	var count uint = 0
-	for _, bs := range bs.data {
+	for _, bs := range bs.Data {
 		tmp := bs
 		for tmp > 0 {
 			count += (tmp & 1)
@@ -83,12 +91,12 @@ func (bs *BitSet) Count() uint {
 }
 
 func (bs *BitSet) String() string {
-	s := ""
-	for _, bitset := range bs.data {
+	var s strings.Builder
+	for _, bitset := range bs.Data {
 		tmp := bitset
 		for range wordSize {
-			s += fmt.Sprint(tmp & 1)
-			if len(s) == int(bs.Len()) {
+			fmt.Fprint(&s, tmp&1)
+			if len(s.String()) == int(bs.Len()) {
 				break
 			}
 			tmp >>= 1
@@ -96,8 +104,8 @@ func (bs *BitSet) String() string {
 	}
 
 	var r []byte
-	for i := len(s) - 1; i >= 0; i-- {
-		r = append(r, s[i])
+	for i := len(s.String()) - 1; i >= 0; i-- {
+		r = append(r, s.String()[i])
 	}
 
 	return string(r)
