@@ -10,8 +10,7 @@ pub struct Sieve {
 impl Sieve {
     fn new(limit: usize) -> Sieve {
         let bitslength: usize = limit.div_ceil(2);
-        let mut bits: FixedBitSet = FixedBitSet::with_capacity(bitslength);
-        bits.toggle_range(..);
+        let bits: FixedBitSet = FixedBitSet::with_capacity(bitslength);
         Sieve { bitslength, bits }
     }
 
@@ -24,7 +23,7 @@ impl Sieve {
         while factor < q {
             // find next bit
             for i in factor..self.bitslength {
-                if self.bits[i] {
+                if !self.bits[i] {
                     factor = i;
                     break;
                 }
@@ -34,7 +33,7 @@ impl Sieve {
             step = 2 * factor + 1;
             start = 2 * factor * (factor + 1);
             for i in (start..self.bitslength).step_by(step) {
-                self.bits.set(i, false);
+                self.bits.set(i, true);
             }
 
             factor += 1;
@@ -42,7 +41,7 @@ impl Sieve {
     }
 
     fn count_primes(self) -> usize {
-        self.bits.count_ones(..)
+        self.bits.count_zeroes(..)
     }
 }
 
