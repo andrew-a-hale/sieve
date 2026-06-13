@@ -24,7 +24,9 @@ jssieve:
 	PARSED=$$(tr -d "_" <<< $(SIZE)); \
 	if [ $$PARSED -lt 1000000000 ]; then \
 		node js/sieve.js $(SIZE) NodeJS; \
-		bun js/sieve.js $(SIZE) Bun; \ else \ echo "NodeJS        -- Duration: Skipped -- Too Slow"; \
+		bun js/sieve.js $(SIZE) Bun; \
+	else \
+		echo "NodeJS        -- Duration: Skipped -- Too Slow"; \
 		echo "Bun           -- Duration: Skipped -- Too Slow"; \
 	fi
 
@@ -56,7 +58,9 @@ zigsieve:
 	cd zig && zig run -O ReleaseFast main.zig -- $(SIZE)
 
 llmcsieve:
-	cd llm-c && make > /dev/null && ./main $(SIZE)
+	cd llm-c && make > /dev/null && ./main $(SIZE) 0
 
 run: pysieve gosieve jlsieve rssieve rsieve mlsieve jssieve exsieve javasieve csieve cssieve dbsieve zigsieve llmcsieve
 
+llmcrace:
+	cd llm-c && make > /dev/null && ./main 1_000_000 1

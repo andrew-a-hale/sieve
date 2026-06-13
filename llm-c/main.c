@@ -179,19 +179,45 @@ static char *strip_separators(char *s) {
   return s;
 }
 
+void race(int limit) {
+  float timer = 0;
+  float delta = 0;
+  float ub = 5.0f;
+
+  int count = 0;
+  while (timer < ub) {
+    clock_t start = clock();
+    run_sieve(limit);
+    delta = (float)(clock() - start) / CLOCKS_PER_SEC;
+    timer += delta;
+    count++;
+  }
+
+  printf("LLM C         -- Duration: %fs -- Count: %d\n", timer, count);
+}
+
+void run(long limit) {
+  clock_t start = clock();
+  int count = run_sieve(limit);
+  clock_t duration = (clock() - start) / 1000;
+  printf("LLM C         -- Duration: %ldms -- Count: %d\n", duration, count);
+}
+
 int main(int argc, char **argv) {
-  if (argc < 2)
+  if (argc < 3)
     return 1;
 
-  uint64_t limit = strtoull(strip_separators(argv[1]), NULL, 10);
+  long limit = strtoull(strip_separators(argv[1]), NULL, 10);
+  long mode = strtol(argv[2], NULL, 10);
 
-  struct timespec t0, t1;
-  clock_gettime(CLOCK_MONOTONIC, &t0);
-  uint64_t count = run_sieve(limit);
-  clock_gettime(CLOCK_MONOTONIC, &t1);
+  switch (mode) {
+  case 0:
+    run(limit);
+    break;
+  case 1:
+    race(limit);
+    break;
+  }
 
-  int64_t ms =
-      (t1.tv_sec - t0.tv_sec) * 1000 + (t1.tv_nsec - t0.tv_nsec) / 1000000;
-  printf("C             -- Duration: %ldms -- Count: %lu\n", ms, count);
   return 0;
 }
