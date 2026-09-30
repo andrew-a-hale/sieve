@@ -219,5 +219,8 @@ int main(int argc, char **argv) {
     break;
   }
 
+  int64_t ms =
+      (t1.tv_sec - t0.tv_sec) * 1000 + (t1.tv_nsec - t0.tv_nsec) / 1000000;
+  printf("LLM-C         -- Duration: %ldms -- Count: %lu\n", ms, count);
   return 0;
 }

@@ -1,11 +1,11 @@
 SIZE ?= 1_000_000
-.SILENT: pysieve gosieve jlsieve rssieve rsieve mlsieve jssieve exsieve javasieve csieve cssieve dbsieve zigsieve llmcsieve
+.SILENT: pysieve gosieve jlsieve rssieve rsieve mlsieve jssieve exsieve javasieve csieve cssieve dbsieve zigsieve llmcsieve odinsieve
 
 pysieve:
 	cd python && python run.py $(SIZE)
 
 gosieve:
-	cd go && go build main.go && ./main $(SIZE)
+	cd go && go build main.go && ./main $(SIZE) && rm main
 
 jlsieve:
 	julia julia/main.jl $(SIZE)
@@ -41,7 +41,7 @@ javasieve:
 	cd java && javac Sieve.java && java Sieve $(SIZE)
 
 csieve:
-	cd c && make > /dev/null && ./main $(SIZE)
+	cd c && make > /dev/null && ./main $(SIZE) && rm main
 
 cssieve:
 	cd csharp && make > /dev/null && ./main/csharp -- $(SIZE)
@@ -58,9 +58,12 @@ zigsieve:
 	cd zig && zig run -O ReleaseFast main.zig -- $(SIZE)
 
 llmcsieve:
-	cd llm-c && make > /dev/null && ./main $(SIZE) 0
+	cd llm-c && make > /dev/null && ./main $(SIZE) && rm main
 
-run: pysieve gosieve jlsieve rssieve rsieve mlsieve jssieve exsieve javasieve csieve cssieve dbsieve zigsieve llmcsieve
+odinsieve:
+	cd odin && make > /dev/null && ./main $(SIZE) && rm main
+
+run: pysieve gosieve jlsieve rssieve rsieve mlsieve jssieve exsieve javasieve csieve cssieve dbsieve zigsieve llmcsieve odinsieve
 
 llmcrace:
 	cd llm-c && make > /dev/null && ./main 1_000_000 1
