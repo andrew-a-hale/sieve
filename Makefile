@@ -58,7 +58,7 @@ zigsieve:
 	cd zig && zig run -O ReleaseFast main.zig -- $(SIZE)
 
 llmcsieve:
-	cd llm-c && make > /dev/null && ./main $(SIZE) && rm main
+	cd llm-c && make > /dev/null && ./main $(SIZE) 0 && rm main
 
 odinsieve:
 	cd odin && make > /dev/null && ./main $(SIZE) && rm main
