@@ -11,7 +11,6 @@ Prime Sieve in multiple languages
 - Go
 - Rust
 - R / Rcpp
-- Rcpp
 - OCaml
 - JS (NodeJS + Bun)
 - Elixir
@@ -20,6 +19,7 @@ Prime Sieve in multiple languages
 - C#
 - Zig
 - DuckDB
+- Odin
 
 ## Timings
 
@@ -41,6 +41,7 @@ Java          -- Duration: 1906ms   -- Count: 50847534
 C             -- Duration: 1485ms   -- Count: 50847534
 C#            -- Duration: 2198ms   -- Count: 50847534
 Zig           -- Duration: 1288ms   -- Count: 50847534
+Odin          -- Duration: 1367ms   -- Count: 50847534
 DuckDB        -- Duration: 176730ms -- Count: 50847534
 Bun           -- Duration: 175869ms -- Count: 50847534
 NodeJS        -- Duration: 2500ms   -- Count: 5761455  // ran out of memory for 1_000_000_000
@@ -68,5 +69,6 @@ C             -- Duration: 0ms  -- Count: 78498
 C#            -- Duration: 3ms  -- Count: 78498
 DuckDB        -- Duration: 55ms -- Count: 78498
 Zig           -- Duration: 1ms  -- Count: 78498
+Odin          -- Duration: 1ms  -- Count: 78498
 Elixir        -- Duration: Skipped -- Too Slow
 ```
