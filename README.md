@@ -40,7 +40,7 @@ OCaml Fast    -- Duration: 6664ms   -- Count: 50847534
 Java          -- Duration: 1906ms   -- Count: 50847534
 C             -- Duration: 1485ms   -- Count: 50847534
 C#            -- Duration: 2198ms   -- Count: 50847534
-Zig           -- Duration: 1288ms   -- Count: 50847534
+Zig           -- Duration: 1328ms   -- Count: 50847534
 Odin          -- Duration: 1367ms   -- Count: 50847534
 DuckDB        -- Duration: 176730ms -- Count: 50847534
 Bun           -- Duration: 175869ms -- Count: 50847534

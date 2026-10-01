@@ -8,13 +8,13 @@ import "core:math"
 import "base:intrinsics"
 import ba "core:container/bit_array"
 
-run_sieve :: proc(limit: int) -> int {
-  bits : ba.Bit_Array
-  if !ba.init(&bits, (limit + 1) / 2) {
+create_sieve :: proc(sieve: ^ba.Bit_Array, limit: int) {
+  if !ba.init(sieve, (limit + 1) / 2) {
     fmt.panicf("unable to create bitset")
   }
-  sieve := &bits
+}
 
+run_sieve :: proc(sieve: ^ba.Bit_Array) {
   bitslength := ba.len(sieve)
 	q := int(math.sqrt(f64(bitslength/2))) + 1
   start, step : int
@@ -37,11 +37,14 @@ run_sieve :: proc(limit: int) -> int {
 
     factor += 1
 	}
+}
 
+count_sieve :: proc(sieve: ^ba.Bit_Array) -> int {
   n := ba.len(sieve)
   for w in sieve.bits {
     n -= int(intrinsics.count_ones(w))
   }
+
   return n
 }
 
@@ -52,13 +55,13 @@ main :: proc() {
   }
 
   sw := &time.Stopwatch{}
-
-  // start
   time.stopwatch_start(sw)
 
-  count := run_sieve(limit)
+  sieve : ba.Bit_Array
+  create_sieve(&sieve, limit)
+  run_sieve(&sieve)
+  count := count_sieve(&sieve)
   duration := int(time.duration_milliseconds(time.stopwatch_duration(sw^)))
 
-  // end
   fmt.printf("Odin          -- Duration: %dms -- Count: %d", duration, count)
 }
