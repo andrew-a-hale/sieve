@@ -40,4 +40,8 @@ local start = os.clock()
 local count = sieve_run(n)
 
 local duration = math.floor((os.clock() - start) * 1000)
-print(string.format("Lua           -- Duration: %dms -- Count: %d\n", duration, count))
+if arg[2] == "luajit" then
+	print(string.format("LuaJIT        -- Duration: %dms -- Count: %d\n", duration, count))
+else
+	print(string.format("Lua           -- Duration: %dms -- Count: %d", duration, count))
+end
