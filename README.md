@@ -46,6 +46,7 @@ DuckDB        -- Duration: 176730ms -- Count: 50847534
 Bun           -- Duration: 175869ms -- Count: 50847534
 NodeJS        -- Duration: 2500ms   -- Count: 5761455  // ran out of memory for 1_000_000_000
 Elixir        -- Duration: 127ms    -- Count: 9592    // too slow for 1_000_000_000
+Lua           -- Duration: 
 ```
 
 ### Primes Up to 1_000_000

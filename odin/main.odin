@@ -63,5 +63,5 @@ main :: proc() {
   count := count_sieve(&sieve)
   duration := int(time.duration_milliseconds(time.stopwatch_duration(sw^)))
 
-  fmt.printf("Odin          -- Duration: %dms -- Count: %d", duration, count)
+  fmt.printf("Odin          -- Duration: %dms -- Count: %d\n", duration, count)
 }

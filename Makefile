@@ -1,5 +1,5 @@
 SIZE ?= 1_000_000
-.SILENT: pysieve gosieve jlsieve rssieve rsieve mlsieve jssieve exsieve javasieve csieve cssieve dbsieve zigsieve llmcsieve odinsieve
+.SILENT: pysieve gosieve jlsieve rssieve rsieve mlsieve jssieve exsieve javasieve csieve cssieve dbsieve zigsieve llmcsieve odinsieve luasieve
 
 pysieve:
 	cd python && python run.py $(SIZE)
@@ -63,7 +63,15 @@ llmcsieve:
 odinsieve:
 	cd odin && make > /dev/null && ./main $(SIZE) && rm main
 
-run: pysieve gosieve jlsieve rssieve rsieve mlsieve jssieve exsieve javasieve csieve cssieve dbsieve zigsieve llmcsieve odinsieve
+luasieve:
+	PARSED=$$(tr -d "_" <<< $(SIZE)); \
+	if [ $$PARSED -lt 10000000000 ]; then \
+		cd lua && ulimit -v unlimited && lua ./sieve.lua $(SIZE); \
+	else \
+		echo "Lua           -- Duration: Skipped -- Table Overflow"; \
+	fi
+
+run: pysieve gosieve jlsieve rssieve rsieve mlsieve jssieve exsieve javasieve csieve cssieve dbsieve zigsieve llmcsieve odinsieve luasieve
 
 llmcrace:
 	cd llm-c && make > /dev/null && ./main 1_000_000 1
