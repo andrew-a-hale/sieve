@@ -48,7 +48,7 @@ cssieve:
 
 dbsieve:
 	PARSED=$$(tr -d "_" <<< $(SIZE)); \
-	if [ $$PARSED -lt 100000000 ]; then \
+	if [ $$PARSED -lt 10000000000 ]; then \
 		cd duckdb && ./go.sh $(SIZE); \
 	else \
 		echo "DuckdDB       -- Duration: Skipped -- Too Slow"; \
@@ -65,10 +65,11 @@ odinsieve:
 
 luasieve:
 	PARSED=$$(tr -d "_" <<< $(SIZE)); \
-	if [ $$PARSED -lt 10000000000 ]; then \
-		cd lua && ulimit -v unlimited && lua ./sieve.lua $(SIZE); \
+	cd lua && ulimit -v unlimited && lua ./sieve.lua $(SIZE) lua; \
+	if [ $$PARSED -lt 1000000000 ]; then \
+		luajit ./sieve.lua $(SIZE) luajit; \
 	else \
-		echo "Lua           -- Duration: Skipped -- Table Overflow"; \
+		echo "LuaJIT        -- Duration: Skipped -- Table Overflow"; \
 	fi
 
 run: pysieve gosieve jlsieve rssieve rsieve mlsieve jssieve exsieve javasieve csieve cssieve dbsieve zigsieve llmcsieve odinsieve luasieve

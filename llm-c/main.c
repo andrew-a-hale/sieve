@@ -6,166 +6,137 @@
 #include <time.h>
 
 /*
- * Segmented odd-only Sieve of Eratosthenes.
+ * Wheel-30 segmented Sieve of Eratosthenes.
  *
- * Index i in the bitset represents the odd number 2*i+1.
- * For a prime p = 2*f+1, multiples are cleared starting from
- * p^2 at index (p^2-1)/2 = 2*f*(f+1), stepping by p.
+ * Only numbers coprime to 30 are represented, 8 per block of 30:
+ *   1 7 11 13 17 19 23 29
+ * Compressed index i = 8*(n/30) + slot[n%30], so i&7 is the wheel slot
+ * and the number is 30*(i/8) + WHEEL[i&7].  That is 0.53x the bits of an
+ * odd-only sieve, so every clearing pass touches ~half as much memory.
  *
- * The full range is processed in 32 KB segments that fit in
- * L1 data cache.  Segments are allocated once on the stack and
- * reused.  Word-at-a-time clearing (precomputed 64-bit masks)
- * is used for primes <= 64; per-bit clearing for larger primes.
+ * A multiple of a prime p >= 7 that survives the wheel is p*m with
+ * gcd(m,30) = 1, i.e. 8 arithmetic progressions of constant stride 8*p
+ * in index space - one cursor per (prime, slot), no step table, and no
+ * division or modulo anywhere in the sweep.
  */
 
 #define WORD_BITS 64
-#define SEGMENT_BYTES (32 * 1024)
+#define SEGMENT_BYTES (256 * 1024)
 #define SEGMENT_WORDS (SEGMENT_BYTES / sizeof(uint64_t))
-#define SEGMENT_INDICES (SEGMENT_WORDS * WORD_BITS)
+#define SEGMENT_BITS (SEGMENT_WORDS * WORD_BITS)
 #define ALL_ONES (~0ULL)
 
-/* Max odd primes <= 64: 3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61 = 17 */
-#define MAX_SMALL_PRIMES 18
+/* residues coprime to 30 */
+static const uint8_t WHEEL[8] = {1, 7, 11, 13, 17, 19, 23, 29};
+/* slot of n % 30; 9 means "divisible by 2, 3 or 5" */
+static const uint8_t SLOT[30] = {0, 0, 9, 9, 9, 9, 9, 1, 9, 9, 9, 2, 9, 3, 9,
+                                 9, 9, 4, 9, 5, 9, 9, 9, 6, 9, 9, 9, 9, 9, 7};
 
-typedef struct {
-  uint64_t masks[WORD_BITS]; /* precomputed word mask for each bit offset */
-  uint64_t word_adv[WORD_BITS];
-  uint64_t next_p0[WORD_BITS];
-} SmallPrime;
+/* compressed index of n (n must be coprime to 30) */
+static inline uint64_t widx(uint64_t n) { return 8 * (n / 30) + SLOT[n % 30]; }
 
-/*
- * Index formulas for the odd-only representation.
- * factor f in [0, bw) corresponds to prime p = 2*f+1.
- * For p = 2*f+1, the first index to clear is
- *   (p^2 - 1) / 2  =  2*f*(f+1).
- */
-static inline uint64_t prime_of(uint64_t factor) { return 2 * factor + 1; }
-static inline uint64_t start_of(uint64_t factor) {
-  return 2 * factor * (factor + 1);
+static uint64_t slots_upto(uint64_t rem) {
+  uint64_t c = 0;
+  for (uint64_t r = 1; r <= rem; r++) /* residue 0 is not representable */
+    c += SLOT[r] != 9;
+  return c;
 }
-static inline uint64_t pstart_of(uint64_t p) { return (p * p - 1) / 2; }
+
+/* all odd primes <= top, ascending */
+static uint64_t collect_primes(uint64_t top, uint64_t **out) {
+  *out = NULL;
+  if (top < 3)
+    return 0;
+  uint64_t fmax = (top + 1) / 2; /* index f <-> number 2f+1 */
+  uint64_t words = (fmax + WORD_BITS - 1) / WORD_BITS;
+  uint64_t *bits = malloc(words * sizeof(uint64_t));
+  for (uint64_t w = 0; w < words; w++)
+    bits[w] = ALL_ONES;
+  for (uint64_t f = 1; 2 * f * (f + 1) < fmax; f++) {
+    if (!(bits[f / WORD_BITS] & (1ULL << (f % WORD_BITS))))
+      continue;
+    uint64_t p = 2 * f + 1;
+    for (uint64_t i = 2 * f * (f + 1); i < fmax; i += p)
+      bits[i / WORD_BITS] &= ~(1ULL << (i % WORD_BITS));
+  }
+  uint64_t n = 0;
+  for (uint64_t f = 1; f < fmax; f++)
+    n += (bits[f / WORD_BITS] >> (f % WORD_BITS)) & 1;
+  uint64_t *pr = malloc((n ? n : 1) * sizeof(uint64_t)), k = 0;
+  for (uint64_t f = 1; f < fmax; f++)
+    if (bits[f / WORD_BITS] & (1ULL << (f % WORD_BITS)))
+      pr[k++] = 2 * f + 1;
+  free(bits);
+  *out = pr;
+  return n;
+}
 
 static uint64_t run_sieve(uint64_t limit) {
   if (limit < 2)
     return 0;
-  if (limit == 2)
-    return 1;
+  if (limit < 7)
+    return limit >= 5 ? 3 : (limit >= 3 ? 2 : 1);
 
-  uint64_t bits_len = (limit + 1) / 2;
+  uint64_t bits_len = 8 * (limit / 30) + slots_upto(limit % 30);
 
-  /* ---- small sieve: find all primes up to sqrt(limit) ---- */
-  uint64_t max_factor = (uint64_t)sqrt(bits_len / 2.0) + 1;
-  uint64_t max_words = (max_factor + WORD_BITS - 1) / WORD_BITS;
+  uint64_t top = (uint64_t)sqrt((double)limit);
+  while (top * top > limit)
+    top--;
+  while ((top + 1) * (top + 1) <= limit)
+    top++;
 
-  uint64_t *small = calloc(max_words, sizeof(uint64_t));
-  for (uint64_t w = 0; w < max_words; w++)
-    small[w] = ALL_ONES;
+  uint64_t *pr = NULL;
+  uint64_t np = collect_primes(top, &pr);
+  uint64_t npr = 0;
+  for (uint64_t i = 0; i < np; i++)
+    if (pr[i] >= 7)
+      pr[npr++] = pr[i];
 
-  for (uint64_t f = 1; f < max_factor; f++) {
-    if (!(small[f / WORD_BITS] & (1ULL << (f % WORD_BITS))))
-      continue;
-    uint64_t p = prime_of(f), s = start_of(f);
-    for (uint64_t i = s; i < max_factor; i += p)
-      small[i / WORD_BITS] &= ~(1ULL << (i % WORD_BITS));
-  }
-
-  /* Collect odd primes (p >= 3) */
-  uint64_t *primes = malloc(max_factor * sizeof(uint64_t));
-  uint64_t num_primes = 0;
-  for (uint64_t f = 1; f < max_factor; f++)
-    if (small[f / WORD_BITS] & (1ULL << (f % WORD_BITS)))
-      primes[num_primes++] = prime_of(f);
-  free(small);
-
-  uint64_t *prime_val = malloc(num_primes * sizeof(uint64_t));
-  uint64_t *prime_start = malloc(num_primes * sizeof(uint64_t));
-  for (uint64_t i = 0; i < num_primes; i++) {
-    prime_val[i] = primes[i];
-    prime_start[i] = pstart_of(primes[i]);
-  }
-  free(primes);
-
-  /* ---- precompute word masks for primes <= 64 ---- */
-  SmallPrime small_tables[MAX_SMALL_PRIMES];
-  uint64_t num_small = 0;
-  for (uint64_t i = 0; i < num_primes && prime_val[i] <= WORD_BITS; i++) {
-    uint64_t p = prime_val[i];
-    for (uint64_t p0 = 0; p0 < WORD_BITS; p0++) {
-      uint64_t mask = 0, count = 0;
-      for (uint64_t b = p0; b < WORD_BITS; b += p) {
-        mask |= 1ULL << b;
-        count++;
-      }
-      uint64_t next_idx = p0 + count * p;
-      small_tables[num_small].masks[p0] = mask;
-      small_tables[num_small].word_adv[p0] = next_idx / WORD_BITS;
-      small_tables[num_small].next_p0[p0] = next_idx % WORD_BITS;
+  uint64_t *cursor = calloc(8 * (npr ? npr : 1), sizeof(uint64_t));
+  for (uint64_t qi = 0; qi < npr; qi++) {
+    uint64_t p = pr[qi];
+    for (uint64_t a = 0; a < 8; a++) {
+      uint64_t r = WHEEL[a];
+      uint64_t m = (r >= p) ? r : r + 30 * ((p - r + 29) / 30);
+      cursor[qi * 8 + a] = widx(p * m);
     }
-    num_small++;
   }
 
-  /* ---- segmented sweep ---- */
   uint64_t segment[SEGMENT_WORDS];
   uint64_t total = 0;
 
-  for (uint64_t seg = 0; seg < bits_len; seg += SEGMENT_INDICES) {
-    uint64_t seg_end = seg + SEGMENT_INDICES;
+  for (uint64_t seg = 0; seg < bits_len; seg += SEGMENT_BITS) {
+    uint64_t seg_end = seg + SEGMENT_BITS;
     if (seg_end > bits_len)
       seg_end = bits_len;
-    uint64_t seg_indices = seg_end - seg;
-    uint64_t seg_words = (seg_indices + WORD_BITS - 1) / WORD_BITS;
+    uint64_t seg_bits = seg_end - seg;
+    uint64_t seg_words = (seg_bits + WORD_BITS - 1) / WORD_BITS;
 
-    /* Initialise segment: all bits = candidate prime */
     for (uint64_t w = 0; w < seg_words; w++)
       segment[w] = ALL_ONES;
-    if (seg_indices % WORD_BITS)
-      segment[seg_words - 1] = (1ULL << (seg_indices % WORD_BITS)) - 1;
+    if (seg_bits % WORD_BITS)
+      segment[seg_words - 1] = (1ULL << (seg_bits % WORD_BITS)) - 1;
 
-    /* Small primes: word-at-a-time with precomputed tables */
-    for (uint64_t pi = 0; pi < num_small; pi++) {
-      uint64_t p = prime_val[pi];
-      uint64_t st = prime_start[pi];
-      if (st >= seg_end)
-        continue;
-
-      uint64_t first = (st >= seg) ? st : st + ((seg - st + p - 1) / p) * p;
-      if (first >= seg_end)
-        continue;
-
-      uint64_t w = (first - seg) / WORD_BITS;
-      uint64_t p0 = (first - seg) % WORD_BITS;
-      SmallPrime *t = &small_tables[pi];
-
-      while (w < seg_words) {
-        segment[w] &= ~t->masks[p0];
-        w += t->word_adv[p0];
-        p0 = t->next_p0[p0];
+    for (uint64_t qi = 0; qi < npr; qi++) {
+      uint64_t stride = 8 * pr[qi];
+      uint64_t *cur = &cursor[qi * 8];
+      for (uint64_t a = 0; a < 8; a++) {
+        if (cur[a] >= seg_end)
+          continue;
+        uint64_t i = cur[a] - seg;
+        for (; i < seg_bits; i += stride)
+          segment[i / WORD_BITS] &= ~(1ULL << (i % WORD_BITS));
+        cur[a] = seg + i;
       }
     }
 
-    /* Large primes: per-bit clearing (one hit per word at most) */
-    for (uint64_t pi = num_small; pi < num_primes; pi++) {
-      uint64_t p = prime_val[pi];
-      uint64_t st = prime_start[pi];
-      if (st >= seg_end)
-        continue;
-
-      uint64_t first = (st >= seg) ? st : st + ((seg - st + p - 1) / p) * p;
-      if (first >= seg_end)
-        continue;
-
-      for (uint64_t i = first - seg; i < seg_indices; i += p)
-        segment[i / WORD_BITS] &= ~(1ULL << (i % WORD_BITS));
-    }
-
-    /* Popcount the segment */
     for (uint64_t w = 0; w < seg_words; w++)
       total += __builtin_popcountll(segment[w]);
   }
 
-  free(prime_val);
-  free(prime_start);
-  return total;
+  free(cursor);
+  free(pr);
+  return total + 2; /* wheel has no 2, 3 or 5; index 0 is the number 1 */
 }
 
 static char *strip_separators(char *s) {
@@ -198,9 +169,9 @@ void race(int limit) {
 
 void run(long limit) {
   clock_t start = clock();
-  int count = run_sieve(limit);
+  uint64_t count = run_sieve(limit);
   clock_t duration = (clock() - start) / 1000;
-  printf("LLM C         -- Duration: %ldms -- Count: %d\n", duration, count);
+  printf("LLM C         -- Duration: %ldms -- Count: %lu\n", duration, count);
 }
 
 int main(int argc, char **argv) {

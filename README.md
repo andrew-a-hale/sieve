@@ -20,33 +20,37 @@ Prime Sieve in multiple languages
 - Zig
 - DuckDB
 - Odin
+- lua
 
 ## Timings
 
 ### Primes Up to 1_000_000_000 / Best
 
 ```text
-Cython        -- Duration: 1501ms   -- Count: 50847534
-Python Fast   -- Duration: 2913ms   -- Count: 50847534
-Python Normal -- Duration: 6245ms   -- Count: 50847534
-Python Numpy  -- Duration: 2907ms   -- Count: 50847534
-Go            -- Duration: 1821ms   -- Count: 50847534
-Julia Iter: 0 -- Duration: 1457ms   -- Count: 50847534 // warmup
-Julia Iter: 1 -- Duration: 1412ms   -- Count: 50847534
-Rust          -- Duration: 1498ms   -- Count: 50847534
-R             -- Duration: 7984ms   -- Count: 50847534
-Rcpp          -- Duration: 1394ms   -- Count: 50847534
-OCaml Fast    -- Duration: 6664ms   -- Count: 50847534
-Java          -- Duration: 1906ms   -- Count: 50847534
-C             -- Duration: 1485ms   -- Count: 50847534
-C#            -- Duration: 2198ms   -- Count: 50847534
-Zig           -- Duration: 1328ms   -- Count: 50847534
-Odin          -- Duration: 1367ms   -- Count: 50847534
-DuckDB        -- Duration: 176730ms -- Count: 50847534
-Bun           -- Duration: 175869ms -- Count: 50847534
+Cython        -- Duration: 1445ms -- Count: 50847534
+Python Fast   -- Duration: 2830ms -- Count: 50847534
+Python Normal -- Duration: 6142ms -- Count: 50847534
+Python Numpy  -- Duration: 2841ms -- Count: 50847534
+Go            -- Duration: 1712ms -- Count: 50847534
+Julia Iter: 0 -- Duration: 1315ms -- Count: 50847534 // warmup
+Julia Iter: 1 -- Duration: 1310ms -- Count: 50847534
+Rust          -- Duration: 1460ms -- Count: 50847534
+R             -- Duration: 7859ms -- Count: 67624750
+Rcpp          -- Duration: 1357ms -- Count: 50847534
+OCaml Fast    -- Duration: 6643ms -- Count: 50847534
+Java          -- Duration: 1885ms -- Count: 50847534
+C             -- Duration: 1413ms -- Count: 50847534
+C#            -- Duration: 2157ms -- Count: 50847534
+DuckDB        -- Duration: 143040ms -- Count: 50847534
+Zig           -- Duration: 1229ms -- Count: 50847534
+LLM C         -- Duration: 155ms -- Count: 50847534
+Odin          -- Duration: 1222ms -- Count: 50847534
+Lua           -- Duration: 12561ms -- Count: 50847534
+NodeJS        -- Duration: Skipped -- Run out of Memory
+Bun           -- Duration: Skipped -- Run out of Memory
+LuaJIT        -- Duration: Skipped -- Table Overflow
 NodeJS        -- Duration: 2500ms   -- Count: 5761455  // ran out of memory for 1_000_000_000
-Elixir        -- Duration: 127ms    -- Count: 9592    // too slow for 1_000_000_000
-Lua           -- Duration: 
+Elixir        -- Duration: 127ms    -- Count: 9592     // too slow for 1_000_000_000
 ```
 
 ### Primes Up to 1_000_000
@@ -71,5 +75,7 @@ C#            -- Duration: 3ms  -- Count: 78498
 DuckDB        -- Duration: 55ms -- Count: 78498
 Zig           -- Duration: 1ms  -- Count: 78498
 Odin          -- Duration: 1ms  -- Count: 78498
+Lua           -- Duration: 10ms -- Count: 78498
+LuaJIT        -- Duration: 3ms --  Count: 78498
 Elixir        -- Duration: Skipped -- Too Slow
 ```
